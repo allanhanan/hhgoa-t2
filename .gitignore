@@ -1,0 +1,34 @@
+.env
+.env.*
+!.env.example
+env
+venv
+.venv
+
+# Python & testing
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build & packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Data & local stores
+qdrant_storage/
+data/faiss_index/
+data/msmarco_xi_checkpoints/
+
+# Logs & OS / IDE
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

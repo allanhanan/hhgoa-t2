@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice-Optimized RAG - Interactive Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090D16;
+      --card-bg: rgba(22, 31, 48, 0.65);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-cyan: #00F2FE;
+      --accent-blue: #4FACFE;
+      --accent-purple: #7F00FF;
+      --accent-magenta: #E100FF;
+      --accent-red: #EF4444;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(0, 242, 254, 0.07) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(127, 0, 255, 0.07) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #000;
+      font-size: 16px;
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .total-time-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.1);
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+    }
+
+    .total-time-badge .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Interactive Speak Hero Card */
+    .hero-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .mic-button {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: none;
+      outline: none;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      box-shadow: 0 0 35px rgba(0, 242, 254, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+    }
+
+    .mic-button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 45px rgba(0, 242, 254, 0.6);
+    }
+
+    .mic-button:active {
+      transform: scale(0.96);
+    }
+
+    .mic-button.recording {
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-magenta));
+      box-shadow: 0 0 45px rgba(239, 68, 68, 0.7);
+      animation: pulse-mic 1.2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-mic {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .mic-button svg {
+      width: 38px;
+      height: 38px;
+      fill: #fff;
+    }
+
+    .status-badge {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 18px;
+      transition: color 0.3s ease;
+    }
+
+    .status-badge.recording {
+      color: var(--accent-red);
+    }
+
+    .status-badge.processing {
+      color: var(--accent-cyan);
+    }
+
+    .volume-visualizer {
+      width: 70%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+
+    .volume-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+      border-radius: 4px;
+      transition: width 0.08s ease;
+    }
+
+    /* Text Input Option */
+    .input-row {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .text-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .text-input:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #000;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      padding: 0 20px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .send-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Results Section */
+    .results-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    .section-header {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .transcript-box {
+      font-size: 1.05rem;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.04);
+      border-left: 3px solid var(--accent-cyan);
+      padding: 12px 16px;
+      border-radius: 8px;
+    }
+
+    .answer-box {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 16px;
+      border-radius: 12px;
+      min-height: 70px;
+    }
+
+    /* Pipeline Timing Breakdown Grid */
+    .timing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .timing-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .timing-card .timing-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .timing-card .timing-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+    }
+
+    .timing-card.total-card {
+      border-color: rgba(0, 242, 254, 0.3);
+      background: rgba(0, 242, 254, 0.06);
+    }
+
+    .timing-card.total-card .timing-value {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="brand">
+        <div class="brand-icon">VR</div>
+        <div class="brand-title">Voice RAG Assistant</div>
+      </div>
+      <div class="total-time-badge" id="totalTimeBadge">
+        <span class="label">Total Latency:</span>
+        <span id="totalTimeVal">-- ms</span>
+      </div>
+    </div>
+
+    <!-- Interactive Mic Card -->
+    <div class="hero-card">
+      <button class="mic-button" id="micBtn" title="Click to Speak">
+        <svg viewBox="0 0 24 24" id="micIcon">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+      </button>
+
+      <div class="status-badge" id="statusBadge">Click Mic to Speak</div>
+
+      <div class="volume-visualizer">
+        <div class="volume-fill" id="volumeFill"></div>
+      </div>
+
+      <div class="input-row">
+        <input type="text" class="text-input" id="textInput" placeholder="Or type a question and press Enter..." />
+        <button class="send-btn" id="sendBtn">Send</button>
+      </div>
+    </div>
+
+    <!-- Results Card -->
+    <div class="results-card">
+      <div class="section-header">
+        <span>Interaction Results</span>
+        <span id="sttStatus">Standing by</span>
+      </div>
+      <div class="transcript-box" id="transcriptBox">
+        <em>Click microphone to speak or type a question...</em>
+      </div>
+      <div class="answer-box" id="answerBox">
+        <em>Answer will appear here in real-time.</em>
+      </div>
+      
+      <!-- Timing Breakdown Grid -->
+      <div class="timing-grid">
+        <div class="timing-card">
+          <span class="timing-title">STT (ElevenLabs)</span>
+          <span class="timing-value" id="sttVal">-- ms</span>
+        </div>
+        <div class="timing-card">
+          <span class="timing-title">Data Retrieval & AI</span>
+          <span class="timing-value" id="ragVal">-- ms</span>
+        </div>
+        <div class="timing-card total-card">
+          <span class="timing-title">Total Response Time</span>
+          <span class="timing-value" id="totalVal">-- ms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const micBtn = document.getElementById('micBtn');
+    const statusBadge = document.getElementById('statusBadge');
+    const volumeFill = document.getElementById('volumeFill');
+    const textInput = document.getElementById('textInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const transcriptBox = document.getElementById('transcriptBox');
+    const answerBox = document.getElementById('answerBox');
+    const sttStatus = document.getElementById('sttStatus');
+    const sttVal = document.getElementById('sttVal');
+    const ragVal = document.getElementById('ragVal');
+    const totalVal = document.getElementById('totalVal');
+    const totalTimeVal = document.getElementById('totalTimeVal');
+
+    let ws = null;
+    let isRecording = false;
+    let audioContext = null;
+    let mediaStream = null;
+    let audioProcessor = null;
+    let pcmSamples = [];
+
+    // WebSocket connection
+    function connectWS() {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
+
+      ws.onopen = () => {
+        statusBadge.textContent = 'Click Mic to Speak';
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'transcript') {
+          sttStatus.textContent = 'STT Complete';
+          transcriptBox.textContent = `You: "${data.text}"`;
+        } else if (data.type === 'answer_chunk') {
+          if (answerBox.innerHTML.includes('<em>')) {
+            answerBox.textContent = '';
+          }
+          answerBox.textContent += data.chunk;
+        } else if (data.type === 'answer') {
+          answerBox.textContent = data.text;
+          statusBadge.textContent = 'Click Mic to Speak';
+          statusBadge.className = 'status-badge';
+          if (data.timings) {
+            const sttMs = Math.round(data.timings.stt_ms);
+            const ragMs = Math.round(data.timings.rag_ms);
+            const totalMs = sttMs + ragMs;
+
+            sttVal.textContent = `${sttMs} ms`;
+            ragVal.textContent = `${ragMs} ms`;
+            totalVal.textContent = `${totalMs} ms`;
+            totalTimeVal.textContent = `${totalMs} ms`;
+          }
+        }
+      };
+
+      ws.onclose = () => {
+        statusBadge.textContent = 'Disconnected. Reconnecting...';
+        setTimeout(connectWS, 2000);
+      };
+    }
+
+    connectWS();
+
+    // Start Recording from Browser Microphone
+    async function startRecording() {
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+        const source = audioContext.createMediaStreamSource(mediaStream);
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        source.connect(analyser);
+
+        const bufferSize = 4096;
+        audioProcessor = audioContext.createScriptProcessor(bufferSize, 1, 1);
+        pcmSamples = [];
+
+        audioProcessor.onaudioprocess = (e) => {
+          if (!isRecording) return;
+          const inputData = e.inputBuffer.getChannelData(0);
+          for (let i = 0; i < inputData.length; i++) {
+            pcmSamples.push(inputData[i]);
+          }
+
+          // Volume visualizer calculation
+          const dataArray = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(dataArray);
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+          const avg = sum / dataArray.length;
+          volumeFill.style.width = `${Math.min(100, avg * 2)}%`;
+        };
+
+        source.connect(audioProcessor);
+        audioProcessor.connect(audioContext.destination);
+
+        isRecording = true;
+        micBtn.classList.add('recording');
+        statusBadge.textContent = 'Recording... Click again to Send';
+        statusBadge.className = 'status-badge recording';
+      } catch (err) {
+        alert('Microphone access denied or not available: ' + err.message);
+      }
+    }
+
+    // Stop Recording & Send PCM Audio over WebSocket
+    function stopRecordingAndSend() {
+      if (!isRecording) return;
+      isRecording = false;
+      micBtn.classList.remove('recording');
+      statusBadge.textContent = 'Processing & Transcribing...';
+      statusBadge.className = 'status-badge processing';
+      volumeFill.style.width = '0%';
+
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+      }
+      if (audioContext) {
+        audioContext.close();
+      }
+
+      // Convert float32 array to 16-bit PCM bytes
+      const pcm16 = new Int16Array(pcmSamples.length);
+      for (let i = 0; i < pcmSamples.length; i++) {
+        const s = Math.max(-1, Math.min(1, pcmSamples[i]));
+        pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+      }
+
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(pcm16.buffer);
+      }
+    }
+
+    micBtn.addEventListener('click', () => {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecordingAndSend();
+      }
+    });
+
+    // Send Text Query directly
+    function sendTextQuery() {
+      const q = textInput.value.trim();
+      if (!q) return;
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'text_query', text: q }));
+        transcriptBox.textContent = `You: "${q}"`;
+        answerBox.innerHTML = '<em>Searching knowledge base...</em>';
+        statusBadge.textContent = 'Processing RAG Query...';
+        statusBadge.className = 'status-badge processing';
+        textInput.value = '';
+      }
+    }
+
+    sendBtn.addEventListener('click', sendTextQuery);
+    textInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendTextQuery();
+    });
+  </script>
+</body>
+</html>

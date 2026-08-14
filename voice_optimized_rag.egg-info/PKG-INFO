@@ -1,0 +1,51 @@
+Metadata-Version: 2.4
+Name: voice-optimized-rag
+Version: 0.1.0
+Summary: Zero-latency asynchronous memory router for voice agents using dual-agent architecture
+Author: VoiceAgentRAG Contributors
+License: MIT
+Project-URL: Homepage, https://github.com/SalesforceAIResearch/VoiceAgentRAG
+Project-URL: Repository, https://github.com/SalesforceAIResearch/VoiceAgentRAG
+Keywords: rag,voice,real-time,dual-agent,memory,cache
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: faiss-cpu>=1.7.4
+Requires-Dist: pydantic>=2.0
+Requires-Dist: pydantic-settings>=2.0
+Requires-Dist: httpx>=0.25.0
+Provides-Extra: openai
+Requires-Dist: openai>=1.0; extra == "openai"
+Provides-Extra: anthropic
+Requires-Dist: anthropic>=0.30; extra == "anthropic"
+Provides-Extra: ollama
+Requires-Dist: ollama>=0.3; extra == "ollama"
+Provides-Extra: gemini
+Requires-Dist: google-genai>=1.0; extra == "gemini"
+Provides-Extra: sentence-transformers
+Requires-Dist: sentence-transformers>=3.0; extra == "sentence-transformers"
+Provides-Extra: qdrant
+Requires-Dist: qdrant-client>=1.9; extra == "qdrant"
+Provides-Extra: datasets
+Requires-Dist: datasets>=2.19; extra == "datasets"
+Provides-Extra: voice
+Requires-Dist: sounddevice>=0.4; extra == "voice"
+Requires-Dist: webrtcvad>=2.0.10; extra == "voice"
+Provides-Extra: whisper
+Requires-Dist: faster-whisper>=1.0; extra == "whisper"
+Provides-Extra: tts
+Requires-Dist: edge-tts>=6.1; extra == "tts"
+Provides-Extra: all
+Requires-Dist: voice-optimized-rag[anthropic,gemini,ollama,openai,qdrant,sentence-transformers,tts,voice]; extra == "all"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
