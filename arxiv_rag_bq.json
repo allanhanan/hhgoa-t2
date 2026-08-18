@@ -1,0 +1,284 @@
+{
+  "status": "success",
+  "results_count": 1,
+  "papers": [
+    {
+      "id": "2504.13684v1",
+      "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+      "pdf_url": "https://arxiv.org/pdf/2504.13684v1",
+      "summary": "Human cognition is constrained by processing limitations, leading to cognitive overload and inefficiencies in knowledge synthesis and decision-making. Large Language Models (LLMs) present an opportunity for cognitive augmentation, but their current reactive nature limits their real-world applicability. This position paper explores the potential of context-aware cognitive augmentation, where LLMs dynamically adapt to users' cognitive states and task environments to provide appropriate support. Through a think-aloud study in an exhibition setting, we examine how individuals interact with multi-modal information and identify key cognitive challenges in structuring, retrieving, and applying knowledge. Our findings highlight the need for AI-driven cognitive support systems that integrate real-time contextual awareness, personalized reasoning assistance, and socially adaptive interactions. We propose a framework for AI augmentation that seamlessly transitions between real-time cognitive support and post-experience knowledge organization, contributing to the design of more effective human-centered AI systems.",
+      "published": "2025-04-18T13:35:21Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        " Xiangrong",
+        " Zhu",
+        "Yuan Xu",
+        "Tianjian Liu",
+        "Jingwei Sun",
+        "Yu Zhang",
+        "Xin Tong"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 2,
+  "papers": [
+    {
+      "id": "2504.13684v1",
+      "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+      "pdf_url": "https://arxiv.org/pdf/2504.13684v1",
+      "summary": "Human cognition is constrained by processing limitations, leading to cognitive overload and inefficiencies in knowledge synthesis and decision-making. Large Language Models (LLMs) present an opportunity for cognitive augmentation, but their current reactive nature limits their real-world applicability. This position paper explores the potential of context-aware cognitive augmentation, where LLMs dynamically adapt to users' cognitive states and task environments to provide appropriate support. Through a think-aloud study in an exhibition setting, we examine how individuals interact with multi-modal information and identify key cognitive challenges in structuring, retrieving, and applying knowledge. Our findings highlight the need for AI-driven cognitive support systems that integrate real-time contextual awareness, personalized reasoning assistance, and socially adaptive interactions. We propose a framework for AI augmentation that seamlessly transitions between real-time cognitive support and post-experience knowledge organization, contributing to the design of more effective human-centered AI systems.",
+      "published": "2025-04-18T13:35:21Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        " Xiangrong",
+        " Zhu",
+        "Yuan Xu",
+        "Tianjian Liu",
+        "Jingwei Sun",
+        "Yu Zhang",
+        "Xin Tong"
+      ]
+    },
+    {
+      "id": "2504.17204v1",
+      "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+      "pdf_url": "https://arxiv.org/pdf/2504.17204v1",
+      "summary": "Wearable devices are transforming human capabilities by seamlessly augmenting cognitive functions. In this position paper, we propose a voice-based, interactive learning companion designed to amplify and extend cognitive abilities through informal learning. Our vision is threefold: (1) to enable users to discover new knowledge on-the-go through contextual interactive quizzes, fostering critical thinking and mindfulness, (2) to proactively detect misinformation, empowering users to critically assess information in real time, and (3) to provide spoken language correction and prompting hints for second language learning and effective communication. As an initial step toward this vision, we present Factually - a proactive, wearable fact-checking system integrated into devices like smartwatches or rings. Factually discreetly alerts users to potential falsehoods via vibrotactile feedback, helping them assess information critically. We demonstrate its utility through three illustrative scenarios, highlighting its potential to extend cognitive abilities for real-time misinformation detection. Early qualitative feedback suggests that Factually can enhance users' fact-checking capabilities, offering both practical and experiential benefits.",
+      "published": "2025-04-24T02:29:50Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Chitralekha Gupta",
+        "Hanjun Wu",
+        "Praveen Sasikumar",
+        "Shreyas Sridhar",
+        "Priambudi Bagaskara",
+        "Suranga Nanayakkara"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 3,
+  "papers": [
+    {
+      "id": "2504.13684v1",
+      "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+      "pdf_url": "https://arxiv.org/pdf/2504.13684v1",
+      "summary": "Human cognition is constrained by processing limitations, leading to cognitive overload and inefficiencies in knowledge synthesis and decision-making. Large Language Models (LLMs) present an opportunity for cognitive augmentation, but their current reactive nature limits their real-world applicability. This position paper explores the potential of context-aware cognitive augmentation, where LLMs dynamically adapt to users' cognitive states and task environments to provide appropriate support. Through a think-aloud study in an exhibition setting, we examine how individuals interact with multi-modal information and identify key cognitive challenges in structuring, retrieving, and applying knowledge. Our findings highlight the need for AI-driven cognitive support systems that integrate real-time contextual awareness, personalized reasoning assistance, and socially adaptive interactions. We propose a framework for AI augmentation that seamlessly transitions between real-time cognitive support and post-experience knowledge organization, contributing to the design of more effective human-centered AI systems.",
+      "published": "2025-04-18T13:35:21Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        " Xiangrong",
+        " Zhu",
+        "Yuan Xu",
+        "Tianjian Liu",
+        "Jingwei Sun",
+        "Yu Zhang",
+        "Xin Tong"
+      ]
+    },
+    {
+      "id": "2504.17204v1",
+      "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+      "pdf_url": "https://arxiv.org/pdf/2504.17204v1",
+      "summary": "Wearable devices are transforming human capabilities by seamlessly augmenting cognitive functions. In this position paper, we propose a voice-based, interactive learning companion designed to amplify and extend cognitive abilities through informal learning. Our vision is threefold: (1) to enable users to discover new knowledge on-the-go through contextual interactive quizzes, fostering critical thinking and mindfulness, (2) to proactively detect misinformation, empowering users to critically assess information in real time, and (3) to provide spoken language correction and prompting hints for second language learning and effective communication. As an initial step toward this vision, we present Factually - a proactive, wearable fact-checking system integrated into devices like smartwatches or rings. Factually discreetly alerts users to potential falsehoods via vibrotactile feedback, helping them assess information critically. We demonstrate its utility through three illustrative scenarios, highlighting its potential to extend cognitive abilities for real-time misinformation detection. Early qualitative feedback suggests that Factually can enhance users' fact-checking capabilities, offering both practical and experiential benefits.",
+      "published": "2025-04-24T02:29:50Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Chitralekha Gupta",
+        "Hanjun Wu",
+        "Praveen Sasikumar",
+        "Shreyas Sridhar",
+        "Priambudi Bagaskara",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2504.14689v1",
+      "title": "Designing AI Systems that Augment Human Performed vs. Demonstrated Critical Thinking",
+      "pdf_url": "https://arxiv.org/pdf/2504.14689v1",
+      "summary": "The recent rapid advancement of LLM-based AI systems has accelerated our search and production of information. While the advantages brought by these systems seemingly improve the performance or efficiency of human activities, they do not necessarily enhance human capabilities. Recent research has started to examine the impact of generative AI on individuals' cognitive abilities, especially critical thinking. Based on definitions of critical thinking across psychology and education, this position paper proposes the distinction between demonstrated and performed critical thinking in the era of generative AI and discusses the implication of this distinction in research and development of AI systems that aim to augment human critical thinking.",
+      "published": "2025-04-20T17:40:28Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning,",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Katelyn Xiaoying Mei",
+        "Nic Weber"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 4,
+  "papers": [
+    {
+      "id": "2504.13684v1",
+      "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+      "pdf_url": "https://arxiv.org/pdf/2504.13684v1",
+      "summary": "Human cognition is constrained by processing limitations, leading to cognitive overload and inefficiencies in knowledge synthesis and decision-making. Large Language Models (LLMs) present an opportunity for cognitive augmentation, but their current reactive nature limits their real-world applicability. This position paper explores the potential of context-aware cognitive augmentation, where LLMs dynamically adapt to users' cognitive states and task environments to provide appropriate support. Through a think-aloud study in an exhibition setting, we examine how individuals interact with multi-modal information and identify key cognitive challenges in structuring, retrieving, and applying knowledge. Our findings highlight the need for AI-driven cognitive support systems that integrate real-time contextual awareness, personalized reasoning assistance, and socially adaptive interactions. We propose a framework for AI augmentation that seamlessly transitions between real-time cognitive support and post-experience knowledge organization, contributing to the design of more effective human-centered AI systems.",
+      "published": "2025-04-18T13:35:21Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        " Xiangrong",
+        " Zhu",
+        "Yuan Xu",
+        "Tianjian Liu",
+        "Jingwei Sun",
+        "Yu Zhang",
+        "Xin Tong"
+      ]
+    },
+    {
+      "id": "2504.17204v1",
+      "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+      "pdf_url": "https://arxiv.org/pdf/2504.17204v1",
+      "summary": "Wearable devices are transforming human capabilities by seamlessly augmenting cognitive functions. In this position paper, we propose a voice-based, interactive learning companion designed to amplify and extend cognitive abilities through informal learning. Our vision is threefold: (1) to enable users to discover new knowledge on-the-go through contextual interactive quizzes, fostering critical thinking and mindfulness, (2) to proactively detect misinformation, empowering users to critically assess information in real time, and (3) to provide spoken language correction and prompting hints for second language learning and effective communication. As an initial step toward this vision, we present Factually - a proactive, wearable fact-checking system integrated into devices like smartwatches or rings. Factually discreetly alerts users to potential falsehoods via vibrotactile feedback, helping them assess information critically. We demonstrate its utility through three illustrative scenarios, highlighting its potential to extend cognitive abilities for real-time misinformation detection. Early qualitative feedback suggests that Factually can enhance users' fact-checking capabilities, offering both practical and experiential benefits.",
+      "published": "2025-04-24T02:29:50Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Chitralekha Gupta",
+        "Hanjun Wu",
+        "Praveen Sasikumar",
+        "Shreyas Sridhar",
+        "Priambudi Bagaskara",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2504.14689v1",
+      "title": "Designing AI Systems that Augment Human Performed vs. Demonstrated Critical Thinking",
+      "pdf_url": "https://arxiv.org/pdf/2504.14689v1",
+      "summary": "The recent rapid advancement of LLM-based AI systems has accelerated our search and production of information. While the advantages brought by these systems seemingly improve the performance or efficiency of human activities, they do not necessarily enhance human capabilities. Recent research has started to examine the impact of generative AI on individuals' cognitive abilities, especially critical thinking. Based on definitions of critical thinking across psychology and education, this position paper proposes the distinction between demonstrated and performed critical thinking in the era of generative AI and discusses the implication of this distinction in research and development of AI systems that aim to augment human critical thinking.",
+      "published": "2025-04-20T17:40:28Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning,",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Katelyn Xiaoying Mei",
+        "Nic Weber"
+      ]
+    },
+    {
+      "id": "2504.16021v1",
+      "title": "Navigating the State of Cognitive Flow: Context-Aware AI Interventions for Effective Reasoning Support",
+      "pdf_url": "https://arxiv.org/pdf/2504.16021v1",
+      "summary": "Flow theory describes an optimal cognitive state where individuals experience deep focus and intrinsic motivation when a task's difficulty aligns with their skill level. In AI-augmented reasoning, interventions that disrupt the state of cognitive flow can hinder rather than enhance decision-making. This paper proposes a context-aware cognitive augmentation framework that adapts interventions based on three key contextual factors: type, timing, and scale. By leveraging multimodal behavioral cues (e.g., gaze behavior, typing hesitation, interaction speed), AI can dynamically adjust cognitive support to maintain or restore flow. We introduce the concept of cognitive flow, an extension of flow theory in AI-augmented reasoning, where interventions are personalized, adaptive, and minimally intrusive. By shifting from static interventions to context-aware augmentation, our approach ensures that AI systems support deep engagement in complex decision-making and reasoning without disrupting cognitive immersion.",
+      "published": "2025-04-22T16:35:39Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Dinithi Dissanayake",
+        "Suranga Nanayakkara"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 5,
+  "papers": [
+    {
+      "id": "2504.13684v1",
+      "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+      "pdf_url": "https://arxiv.org/pdf/2504.13684v1",
+      "summary": "Human cognition is constrained by processing limitations, leading to cognitive overload and inefficiencies in knowledge synthesis and decision-making. Large Language Models (LLMs) present an opportunity for cognitive augmentation, but their current reactive nature limits their real-world applicability. This position paper explores the potential of context-aware cognitive augmentation, where LLMs dynamically adapt to users' cognitive states and task environments to provide appropriate support. Through a think-aloud study in an exhibition setting, we examine how individuals interact with multi-modal information and identify key cognitive challenges in structuring, retrieving, and applying knowledge. Our findings highlight the need for AI-driven cognitive support systems that integrate real-time contextual awareness, personalized reasoning assistance, and socially adaptive interactions. We propose a framework for AI augmentation that seamlessly transitions between real-time cognitive support and post-experience knowledge organization, contributing to the design of more effective human-centered AI systems.",
+      "published": "2025-04-18T13:35:21Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        " Xiangrong",
+        " Zhu",
+        "Yuan Xu",
+        "Tianjian Liu",
+        "Jingwei Sun",
+        "Yu Zhang",
+        "Xin Tong"
+      ]
+    },
+    {
+      "id": "2504.17204v1",
+      "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+      "pdf_url": "https://arxiv.org/pdf/2504.17204v1",
+      "summary": "Wearable devices are transforming human capabilities by seamlessly augmenting cognitive functions. In this position paper, we propose a voice-based, interactive learning companion designed to amplify and extend cognitive abilities through informal learning. Our vision is threefold: (1) to enable users to discover new knowledge on-the-go through contextual interactive quizzes, fostering critical thinking and mindfulness, (2) to proactively detect misinformation, empowering users to critically assess information in real time, and (3) to provide spoken language correction and prompting hints for second language learning and effective communication. As an initial step toward this vision, we present Factually - a proactive, wearable fact-checking system integrated into devices like smartwatches or rings. Factually discreetly alerts users to potential falsehoods via vibrotactile feedback, helping them assess information critically. We demonstrate its utility through three illustrative scenarios, highlighting its potential to extend cognitive abilities for real-time misinformation detection. Early qualitative feedback suggests that Factually can enhance users' fact-checking capabilities, offering both practical and experiential benefits.",
+      "published": "2025-04-24T02:29:50Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Chitralekha Gupta",
+        "Hanjun Wu",
+        "Praveen Sasikumar",
+        "Shreyas Sridhar",
+        "Priambudi Bagaskara",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2504.14689v1",
+      "title": "Designing AI Systems that Augment Human Performed vs. Demonstrated Critical Thinking",
+      "pdf_url": "https://arxiv.org/pdf/2504.14689v1",
+      "summary": "The recent rapid advancement of LLM-based AI systems has accelerated our search and production of information. While the advantages brought by these systems seemingly improve the performance or efficiency of human activities, they do not necessarily enhance human capabilities. Recent research has started to examine the impact of generative AI on individuals' cognitive abilities, especially critical thinking. Based on definitions of critical thinking across psychology and education, this position paper proposes the distinction between demonstrated and performed critical thinking in the era of generative AI and discusses the implication of this distinction in research and development of AI systems that aim to augment human critical thinking.",
+      "published": "2025-04-20T17:40:28Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning,",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Katelyn Xiaoying Mei",
+        "Nic Weber"
+      ]
+    },
+    {
+      "id": "2504.16021v1",
+      "title": "Navigating the State of Cognitive Flow: Context-Aware AI Interventions for Effective Reasoning Support",
+      "pdf_url": "https://arxiv.org/pdf/2504.16021v1",
+      "summary": "Flow theory describes an optimal cognitive state where individuals experience deep focus and intrinsic motivation when a task's difficulty aligns with their skill level. In AI-augmented reasoning, interventions that disrupt the state of cognitive flow can hinder rather than enhance decision-making. This paper proposes a context-aware cognitive augmentation framework that adapts interventions based on three key contextual factors: type, timing, and scale. By leveraging multimodal behavioral cues (e.g., gaze behavior, typing hesitation, interaction speed), AI can dynamically adjust cognitive support to maintain or restore flow. We introduce the concept of cognitive flow, an extension of flow theory in AI-augmented reasoning, where interventions are personalized, adaptive, and minimally intrusive. By shifting from static interventions to context-aware augmentation, our approach ensures that AI systems support deep engagement in complex decision-making and reasoning without disrupting cognitive immersion.",
+      "published": "2025-04-22T16:35:39Z",
+      "comment": "Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning",
+      "authors": [
+        "Dinithi Dissanayake",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2510.23840v1",
+      "title": "Reality Distortion Room: A Study of User Locomotion Responses to Spatial Augmented Reality Effects",
+      "pdf_url": "https://arxiv.org/pdf/2510.23840v1",
+      "summary": "Reality Distortion Room (RDR) is a proof-of-concept augmented reality system using projection mapping and unencumbered interaction with the Microsoft RoomAlive system to study a user's locomotive response to visual effects that seemingly transform the physical room the user is in. This study presents five effects that augment the appearance of a physical room to subtly encourage user motion. Our experiment demonstrates users' reactions to the different distortion and augmentation effects in a standard living room, with the distortion effects projected as wall grids, furniture holograms, and small particles in the air. The augmented living room can give the impression of becoming elongated, wrapped, shifted, elevated, and enlarged. The study results support the implementation of AR experiences in limited physical spaces by providing an initial understanding of how users can be subtly encouraged to move throughout a room.",
+      "published": "2025-10-27T20:25:26Z",
+      "comment": "Conference Paper, 10 pages. Published at the 2023 IEEE International Symposium on Mixed and Augmented Reality (ISMAR)",
+      "primary_category": "cs.HC",
+      "journal_ref": "Proceedings of the 2023 IEEE International Symposium on Mixed and Augmented Reality (ISMAR), pp. 1201-1210",
+      "doi": "10.1109/ISMAR59233.2023.00137",
+      "authors": [
+        "You-Jin Kim",
+        "Andrew D. Wilson",
+        "Jennifer Jacobs",
+        "Tobias H\u00f6llerer"
+      ]
+    }
+  ]
+}

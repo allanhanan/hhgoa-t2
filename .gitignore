@@ -1,34 +1,46 @@
+# Environment & Secrets
 .env
-.env.*
-!.env.example
-env
-venv
-.venv
+.env.local
+.env.*.local
 
-# Python & testing
+# Python Bytecode & Caches
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
-.mypy_cache/
-.ruff_cache/
 .coverage
 htmlcov/
+.build/
 
-# Build & packaging
-build/
-dist/
-*.egg-info/
-*.egg
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
 
-# Data & local stores
-qdrant_storage/
-data/faiss_index/
-data/msmarco_xi_checkpoints/
+# Large Datasets & Generated Artifacts (data/)
+data/*.parquet
+data/*.npy
+data/*.faiss_binary
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.json
 
-# Logs & OS / IDE
+# Large Model Files & Compiled Executables (models/)
+models/*.gguf
+models/*.bin
+models/onnx/
+models/llama-server
+
+# Logs & Temporary Files
 *.log
+*.tmp
+scratch/
+
+# IDE & OS Metadata
 .vscode/
 .idea/
 .DS_Store
-Thumbs.db
+*.swp
+*.swo

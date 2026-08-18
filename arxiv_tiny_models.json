@@ -1,0 +1,315 @@
+{
+  "status": "success",
+  "results_count": 1,
+  "papers": [
+    {
+      "id": "2605.28827v1",
+      "title": "RightNow-Arabic-0.5B-Turbo: An Open Sub-1B Arabic Language Model via Vocabulary Injection and Edge-First Deployment",
+      "pdf_url": "https://arxiv.org/pdf/2605.28827v1",
+      "summary": "Open Arabic large language models split into two classes: sub-1B multilingual models that treat Arabic as an afterthought (Qwen2.5-0.5B, Falcon-H1-0.5B), and 7B-70B Arabic-specialized models that require a server to run (Jais, AceGPT, ALLaM, SILMA). The one published attempt at a sub-2B Arabic-specialized model, Kuwain-1.5B, never released its weights. We present RightNow-Arabic-0.5B-Turbo, a 518M-parameter Arabic-specialized decoder LLM built on Qwen2.5-0.5B. The pipeline adds 27,032 Arabic tokens via mean-subtoken initialization, continues pretraining on 504M Arabic tokens on 8xH100 with FSDP, FlashAttention varlen packing, and Liger fused kernels, then applies supervised fine-tuning on 129,116 Arabic instruction pairs with response-only loss masking, direct preference optimization on 6,750 Arabic preference pairs, and weight soup merging across three checkpoints. On three lm-evaluation-harness Arabic benchmarks (COPA-ar, Arabic HellaSwag, ArabicMMLU) the merged model reaches 35.9% mean accuracy, beats every same-class open model, ties Falcon-H1-1.5B on COPA-ar (58.4%) at one-third the size, and recovers 67% of SILMA-9B's mean at 1/18 the parameters. The edge build quantizes to 398 MB (q4_k_m) and delivers 635 tokens/s at batch size 1 on a single H100 via llama.cpp. All code (5,555 lines across 25 scripts), weights (bf16, int8, and four GGUF quantizations), and benchmark scripts are released at https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo.",
+      "published": "2026-04-10T00:56:50Z",
+      "comment": "12 pages, 7 tables, 4 figures, 1 algorithm. Weights: https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Jaber Jaber",
+        "Osama Jaber"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 2,
+  "papers": [
+    {
+      "id": "2605.28827v1",
+      "title": "RightNow-Arabic-0.5B-Turbo: An Open Sub-1B Arabic Language Model via Vocabulary Injection and Edge-First Deployment",
+      "pdf_url": "https://arxiv.org/pdf/2605.28827v1",
+      "summary": "Open Arabic large language models split into two classes: sub-1B multilingual models that treat Arabic as an afterthought (Qwen2.5-0.5B, Falcon-H1-0.5B), and 7B-70B Arabic-specialized models that require a server to run (Jais, AceGPT, ALLaM, SILMA). The one published attempt at a sub-2B Arabic-specialized model, Kuwain-1.5B, never released its weights. We present RightNow-Arabic-0.5B-Turbo, a 518M-parameter Arabic-specialized decoder LLM built on Qwen2.5-0.5B. The pipeline adds 27,032 Arabic tokens via mean-subtoken initialization, continues pretraining on 504M Arabic tokens on 8xH100 with FSDP, FlashAttention varlen packing, and Liger fused kernels, then applies supervised fine-tuning on 129,116 Arabic instruction pairs with response-only loss masking, direct preference optimization on 6,750 Arabic preference pairs, and weight soup merging across three checkpoints. On three lm-evaluation-harness Arabic benchmarks (COPA-ar, Arabic HellaSwag, ArabicMMLU) the merged model reaches 35.9% mean accuracy, beats every same-class open model, ties Falcon-H1-1.5B on COPA-ar (58.4%) at one-third the size, and recovers 67% of SILMA-9B's mean at 1/18 the parameters. The edge build quantizes to 398 MB (q4_k_m) and delivers 635 tokens/s at batch size 1 on a single H100 via llama.cpp. All code (5,555 lines across 25 scripts), weights (bf16, int8, and four GGUF quantizations), and benchmark scripts are released at https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo.",
+      "published": "2026-04-10T00:56:50Z",
+      "comment": "12 pages, 7 tables, 4 figures, 1 algorithm. Weights: https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Jaber Jaber",
+        "Osama Jaber"
+      ]
+    },
+    {
+      "id": "2608.09771v1",
+      "title": "SLIM-0.5B: Learning Action-Grounded Predictive Latents for Robot Manipulation",
+      "pdf_url": "https://arxiv.org/pdf/2608.09771v1",
+      "summary": "Vision-language-action policies rely on large multimodal backbones to jointly perform perception, language conditioning, and action generation at every control step. Much of this capacity supports open-domain semantics, whereas continuous robot manipulation primarily requires compact representations of observations, actions, and the transitions induced by actions. Pixel-level world models provide another route, but predicting visual details irrelevant to control can be unnecessarily expensive. We propose SLIM (Self-supervised Latent Interaction Model), a compact 0.5B-parameter latent interaction policy. SLIM learns action-grounded predictive latents that capture both action-conditioned future transitions and the actions that explain observed changes. SLIM learns these representations through self-supervised masked trajectory prediction, combining action reconstruction with future-latent prediction. A compact Mixture-of-Transformers (MoT) backbone models interactions between observation latents and action tokens. The resulting policy is trained with flow matching for language-conditioned action generation. Across simulation benchmarks and real-world evaluation, SLIM matches or exceeds representative large-scale VLA and world-action-model baselines with fewer parameters, no additional embodied pretraining, lower inference latency, and substantially lower GPU memory usage.",
+      "published": "2026-08-10T15:58:39Z",
+      "comment": "18 pages, 11 figures. Project page: https://kzz1031.github.io/slim-project-page/",
+      "primary_category": "cs.RO",
+      "authors": [
+        "Jingkai Wang",
+        "Zihan Tang",
+        "Gu Zhang",
+        "Mingyu Cao",
+        "Jiapeng Chen",
+        "Jingjiao Zhao",
+        "Xiansheng Chen",
+        "Pengwei Wang",
+        "Lemao Liu",
+        "Dejing Dou"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 3,
+  "papers": [
+    {
+      "id": "2605.28827v1",
+      "title": "RightNow-Arabic-0.5B-Turbo: An Open Sub-1B Arabic Language Model via Vocabulary Injection and Edge-First Deployment",
+      "pdf_url": "https://arxiv.org/pdf/2605.28827v1",
+      "summary": "Open Arabic large language models split into two classes: sub-1B multilingual models that treat Arabic as an afterthought (Qwen2.5-0.5B, Falcon-H1-0.5B), and 7B-70B Arabic-specialized models that require a server to run (Jais, AceGPT, ALLaM, SILMA). The one published attempt at a sub-2B Arabic-specialized model, Kuwain-1.5B, never released its weights. We present RightNow-Arabic-0.5B-Turbo, a 518M-parameter Arabic-specialized decoder LLM built on Qwen2.5-0.5B. The pipeline adds 27,032 Arabic tokens via mean-subtoken initialization, continues pretraining on 504M Arabic tokens on 8xH100 with FSDP, FlashAttention varlen packing, and Liger fused kernels, then applies supervised fine-tuning on 129,116 Arabic instruction pairs with response-only loss masking, direct preference optimization on 6,750 Arabic preference pairs, and weight soup merging across three checkpoints. On three lm-evaluation-harness Arabic benchmarks (COPA-ar, Arabic HellaSwag, ArabicMMLU) the merged model reaches 35.9% mean accuracy, beats every same-class open model, ties Falcon-H1-1.5B on COPA-ar (58.4%) at one-third the size, and recovers 67% of SILMA-9B's mean at 1/18 the parameters. The edge build quantizes to 398 MB (q4_k_m) and delivers 635 tokens/s at batch size 1 on a single H100 via llama.cpp. All code (5,555 lines across 25 scripts), weights (bf16, int8, and four GGUF quantizations), and benchmark scripts are released at https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo.",
+      "published": "2026-04-10T00:56:50Z",
+      "comment": "12 pages, 7 tables, 4 figures, 1 algorithm. Weights: https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Jaber Jaber",
+        "Osama Jaber"
+      ]
+    },
+    {
+      "id": "2608.09771v1",
+      "title": "SLIM-0.5B: Learning Action-Grounded Predictive Latents for Robot Manipulation",
+      "pdf_url": "https://arxiv.org/pdf/2608.09771v1",
+      "summary": "Vision-language-action policies rely on large multimodal backbones to jointly perform perception, language conditioning, and action generation at every control step. Much of this capacity supports open-domain semantics, whereas continuous robot manipulation primarily requires compact representations of observations, actions, and the transitions induced by actions. Pixel-level world models provide another route, but predicting visual details irrelevant to control can be unnecessarily expensive. We propose SLIM (Self-supervised Latent Interaction Model), a compact 0.5B-parameter latent interaction policy. SLIM learns action-grounded predictive latents that capture both action-conditioned future transitions and the actions that explain observed changes. SLIM learns these representations through self-supervised masked trajectory prediction, combining action reconstruction with future-latent prediction. A compact Mixture-of-Transformers (MoT) backbone models interactions between observation latents and action tokens. The resulting policy is trained with flow matching for language-conditioned action generation. Across simulation benchmarks and real-world evaluation, SLIM matches or exceeds representative large-scale VLA and world-action-model baselines with fewer parameters, no additional embodied pretraining, lower inference latency, and substantially lower GPU memory usage.",
+      "published": "2026-08-10T15:58:39Z",
+      "comment": "18 pages, 11 figures. Project page: https://kzz1031.github.io/slim-project-page/",
+      "primary_category": "cs.RO",
+      "authors": [
+        "Jingkai Wang",
+        "Zihan Tang",
+        "Gu Zhang",
+        "Mingyu Cao",
+        "Jiapeng Chen",
+        "Jingjiao Zhao",
+        "Xiansheng Chen",
+        "Pengwei Wang",
+        "Lemao Liu",
+        "Dejing Dou"
+      ]
+    },
+    {
+      "id": "2604.19877v1",
+      "title": "Super Apriel: One Checkpoint, Many Speeds",
+      "pdf_url": "https://arxiv.org/pdf/2604.19877v1",
+      "summary": "We release Super Apriel, a 15B-parameter supernet in which every decoder layer provides four trained mixer choices -- Full Attention (FA), Sliding Window Attention (SWA), Kimi Delta Attention (KDA), and Gated DeltaNet (GDN). A placement selects one mixer per layer; placements can be switched between requests at serving time without reloading weights, enabling multiple speed presets from a single checkpoint. The shared checkpoint also enables speculative decoding without a separate draft model. The all-FA preset matches the Apriel 1.6 teacher on all reported benchmarks; recommended hybrid presets span $2.9\\times$ to $10.7\\times$ decode throughput at 96% to 77% quality retention, with throughput advantages that compound at longer context lengths. With four mixer types across 48 layers, the configuration space is vast. A surrogate that predicts placement quality from the per-layer mixer assignment makes the speed-quality landscape tractable and identifies the best tradeoffs at each speed level. We investigate whether the best configurations at each speed level can be identified early in training or only after convergence. Rankings stabilize quickly at 0.5B scale, but the most efficient configurations exhibit higher instability at 15B, cautioning against extrapolation from smaller models. Super Apriel is trained by stochastic distillation from a frozen Apriel 1.6 teacher, followed by supervised fine-tuning. We release the supernet weights, Fast-LLM training code, vLLM serving code, and a placement optimization toolkit.",
+      "published": "2026-04-21T18:00:25Z",
+      "comment": "Models: https://huggingface.co/ServiceNow-AI/SuperApriel-15B-Base and https://huggingface.co/ServiceNow-AI/SuperApriel-15B-Instruct . Dev model: https://huggingface.co/ServiceNow-AI/SuperApriel-0.5B-Base . Training code: https://github.com/ServiceNow/Fast-LLM . Async RL: https://github.com/ServiceNow/pipeline-rl . Training logs: https://wandb.ai/servicenow-team/Super_Apriel",
+      "primary_category": "cs.LG",
+      "authors": [
+        "SLAM Labs",
+        " :",
+        "Oleksiy Ostapenko",
+        "Raymond Li",
+        "Torsten Scholak",
+        "Alireza Mousavi-Hosseini",
+        "Aman Tiwari",
+        "Denis Kocetkov",
+        "Joel Lamy Poirier",
+        "Kelechi Ogueji",
+        "Nanda H Krishna",
+        "Rafael Pardinas",
+        "Sathwik Tejaswi Madhusudhan",
+        "Shruthan Radhakrishna",
+        "Srinivas Sunkara",
+        "Valerie Becaert"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 4,
+  "papers": [
+    {
+      "id": "2605.28827v1",
+      "title": "RightNow-Arabic-0.5B-Turbo: An Open Sub-1B Arabic Language Model via Vocabulary Injection and Edge-First Deployment",
+      "pdf_url": "https://arxiv.org/pdf/2605.28827v1",
+      "summary": "Open Arabic large language models split into two classes: sub-1B multilingual models that treat Arabic as an afterthought (Qwen2.5-0.5B, Falcon-H1-0.5B), and 7B-70B Arabic-specialized models that require a server to run (Jais, AceGPT, ALLaM, SILMA). The one published attempt at a sub-2B Arabic-specialized model, Kuwain-1.5B, never released its weights. We present RightNow-Arabic-0.5B-Turbo, a 518M-parameter Arabic-specialized decoder LLM built on Qwen2.5-0.5B. The pipeline adds 27,032 Arabic tokens via mean-subtoken initialization, continues pretraining on 504M Arabic tokens on 8xH100 with FSDP, FlashAttention varlen packing, and Liger fused kernels, then applies supervised fine-tuning on 129,116 Arabic instruction pairs with response-only loss masking, direct preference optimization on 6,750 Arabic preference pairs, and weight soup merging across three checkpoints. On three lm-evaluation-harness Arabic benchmarks (COPA-ar, Arabic HellaSwag, ArabicMMLU) the merged model reaches 35.9% mean accuracy, beats every same-class open model, ties Falcon-H1-1.5B on COPA-ar (58.4%) at one-third the size, and recovers 67% of SILMA-9B's mean at 1/18 the parameters. The edge build quantizes to 398 MB (q4_k_m) and delivers 635 tokens/s at batch size 1 on a single H100 via llama.cpp. All code (5,555 lines across 25 scripts), weights (bf16, int8, and four GGUF quantizations), and benchmark scripts are released at https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo.",
+      "published": "2026-04-10T00:56:50Z",
+      "comment": "12 pages, 7 tables, 4 figures, 1 algorithm. Weights: https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Jaber Jaber",
+        "Osama Jaber"
+      ]
+    },
+    {
+      "id": "2608.09771v1",
+      "title": "SLIM-0.5B: Learning Action-Grounded Predictive Latents for Robot Manipulation",
+      "pdf_url": "https://arxiv.org/pdf/2608.09771v1",
+      "summary": "Vision-language-action policies rely on large multimodal backbones to jointly perform perception, language conditioning, and action generation at every control step. Much of this capacity supports open-domain semantics, whereas continuous robot manipulation primarily requires compact representations of observations, actions, and the transitions induced by actions. Pixel-level world models provide another route, but predicting visual details irrelevant to control can be unnecessarily expensive. We propose SLIM (Self-supervised Latent Interaction Model), a compact 0.5B-parameter latent interaction policy. SLIM learns action-grounded predictive latents that capture both action-conditioned future transitions and the actions that explain observed changes. SLIM learns these representations through self-supervised masked trajectory prediction, combining action reconstruction with future-latent prediction. A compact Mixture-of-Transformers (MoT) backbone models interactions between observation latents and action tokens. The resulting policy is trained with flow matching for language-conditioned action generation. Across simulation benchmarks and real-world evaluation, SLIM matches or exceeds representative large-scale VLA and world-action-model baselines with fewer parameters, no additional embodied pretraining, lower inference latency, and substantially lower GPU memory usage.",
+      "published": "2026-08-10T15:58:39Z",
+      "comment": "18 pages, 11 figures. Project page: https://kzz1031.github.io/slim-project-page/",
+      "primary_category": "cs.RO",
+      "authors": [
+        "Jingkai Wang",
+        "Zihan Tang",
+        "Gu Zhang",
+        "Mingyu Cao",
+        "Jiapeng Chen",
+        "Jingjiao Zhao",
+        "Xiansheng Chen",
+        "Pengwei Wang",
+        "Lemao Liu",
+        "Dejing Dou"
+      ]
+    },
+    {
+      "id": "2604.19877v1",
+      "title": "Super Apriel: One Checkpoint, Many Speeds",
+      "pdf_url": "https://arxiv.org/pdf/2604.19877v1",
+      "summary": "We release Super Apriel, a 15B-parameter supernet in which every decoder layer provides four trained mixer choices -- Full Attention (FA), Sliding Window Attention (SWA), Kimi Delta Attention (KDA), and Gated DeltaNet (GDN). A placement selects one mixer per layer; placements can be switched between requests at serving time without reloading weights, enabling multiple speed presets from a single checkpoint. The shared checkpoint also enables speculative decoding without a separate draft model. The all-FA preset matches the Apriel 1.6 teacher on all reported benchmarks; recommended hybrid presets span $2.9\\times$ to $10.7\\times$ decode throughput at 96% to 77% quality retention, with throughput advantages that compound at longer context lengths. With four mixer types across 48 layers, the configuration space is vast. A surrogate that predicts placement quality from the per-layer mixer assignment makes the speed-quality landscape tractable and identifies the best tradeoffs at each speed level. We investigate whether the best configurations at each speed level can be identified early in training or only after convergence. Rankings stabilize quickly at 0.5B scale, but the most efficient configurations exhibit higher instability at 15B, cautioning against extrapolation from smaller models. Super Apriel is trained by stochastic distillation from a frozen Apriel 1.6 teacher, followed by supervised fine-tuning. We release the supernet weights, Fast-LLM training code, vLLM serving code, and a placement optimization toolkit.",
+      "published": "2026-04-21T18:00:25Z",
+      "comment": "Models: https://huggingface.co/ServiceNow-AI/SuperApriel-15B-Base and https://huggingface.co/ServiceNow-AI/SuperApriel-15B-Instruct . Dev model: https://huggingface.co/ServiceNow-AI/SuperApriel-0.5B-Base . Training code: https://github.com/ServiceNow/Fast-LLM . Async RL: https://github.com/ServiceNow/pipeline-rl . Training logs: https://wandb.ai/servicenow-team/Super_Apriel",
+      "primary_category": "cs.LG",
+      "authors": [
+        "SLAM Labs",
+        " :",
+        "Oleksiy Ostapenko",
+        "Raymond Li",
+        "Torsten Scholak",
+        "Alireza Mousavi-Hosseini",
+        "Aman Tiwari",
+        "Denis Kocetkov",
+        "Joel Lamy Poirier",
+        "Kelechi Ogueji",
+        "Nanda H Krishna",
+        "Rafael Pardinas",
+        "Sathwik Tejaswi Madhusudhan",
+        "Shruthan Radhakrishna",
+        "Srinivas Sunkara",
+        "Valerie Becaert"
+      ]
+    },
+    {
+      "id": "2410.18505v2",
+      "title": "CCI3.0-HQ: a large-scale Chinese dataset of high quality designed for pre-training large language models",
+      "pdf_url": "https://arxiv.org/pdf/2410.18505v2",
+      "summary": "We present CCI3.0-HQ (https://huggingface.co/datasets/BAAI/CCI3-HQ), a high-quality 500GB subset of the Chinese Corpora Internet 3.0 (CCI3.0)(https://huggingface.co/datasets/BAAI/CCI3-Data), developed using a novel two-stage hybrid filtering pipeline that significantly enhances data quality. To evaluate its effectiveness, we trained a 0.5B parameter model from scratch on 100B tokens across various datasets, achieving superior performance on 10 benchmarks in a zero-shot setting compared to CCI3.0, SkyPile, and WanjuanV1. The high-quality filtering process effectively distills the capabilities of the Qwen2-72B-instruct model into a compact 0.5B model, attaining optimal F1 scores for Chinese web data classification. We believe this open-access dataset will facilitate broader access to high-quality language models.",
+      "published": "2024-10-24T07:50:07Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Liangdong Wang",
+        "Bo-Wen Zhang",
+        "Chengwei Wu",
+        "Hanyu Zhao",
+        "Xiaofeng Shi",
+        "Shuhao Gu",
+        "Jijie Li",
+        "Quanyue Ma",
+        "TengFei Pan",
+        "Guang Liu"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 5,
+  "papers": [
+    {
+      "id": "2605.28827v1",
+      "title": "RightNow-Arabic-0.5B-Turbo: An Open Sub-1B Arabic Language Model via Vocabulary Injection and Edge-First Deployment",
+      "pdf_url": "https://arxiv.org/pdf/2605.28827v1",
+      "summary": "Open Arabic large language models split into two classes: sub-1B multilingual models that treat Arabic as an afterthought (Qwen2.5-0.5B, Falcon-H1-0.5B), and 7B-70B Arabic-specialized models that require a server to run (Jais, AceGPT, ALLaM, SILMA). The one published attempt at a sub-2B Arabic-specialized model, Kuwain-1.5B, never released its weights. We present RightNow-Arabic-0.5B-Turbo, a 518M-parameter Arabic-specialized decoder LLM built on Qwen2.5-0.5B. The pipeline adds 27,032 Arabic tokens via mean-subtoken initialization, continues pretraining on 504M Arabic tokens on 8xH100 with FSDP, FlashAttention varlen packing, and Liger fused kernels, then applies supervised fine-tuning on 129,116 Arabic instruction pairs with response-only loss masking, direct preference optimization on 6,750 Arabic preference pairs, and weight soup merging across three checkpoints. On three lm-evaluation-harness Arabic benchmarks (COPA-ar, Arabic HellaSwag, ArabicMMLU) the merged model reaches 35.9% mean accuracy, beats every same-class open model, ties Falcon-H1-1.5B on COPA-ar (58.4%) at one-third the size, and recovers 67% of SILMA-9B's mean at 1/18 the parameters. The edge build quantizes to 398 MB (q4_k_m) and delivers 635 tokens/s at batch size 1 on a single H100 via llama.cpp. All code (5,555 lines across 25 scripts), weights (bf16, int8, and four GGUF quantizations), and benchmark scripts are released at https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo.",
+      "published": "2026-04-10T00:56:50Z",
+      "comment": "12 pages, 7 tables, 4 figures, 1 algorithm. Weights: https://huggingface.co/RightNowAI/RightNow-Arabic-0.5B-Turbo",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Jaber Jaber",
+        "Osama Jaber"
+      ]
+    },
+    {
+      "id": "2608.09771v1",
+      "title": "SLIM-0.5B: Learning Action-Grounded Predictive Latents for Robot Manipulation",
+      "pdf_url": "https://arxiv.org/pdf/2608.09771v1",
+      "summary": "Vision-language-action policies rely on large multimodal backbones to jointly perform perception, language conditioning, and action generation at every control step. Much of this capacity supports open-domain semantics, whereas continuous robot manipulation primarily requires compact representations of observations, actions, and the transitions induced by actions. Pixel-level world models provide another route, but predicting visual details irrelevant to control can be unnecessarily expensive. We propose SLIM (Self-supervised Latent Interaction Model), a compact 0.5B-parameter latent interaction policy. SLIM learns action-grounded predictive latents that capture both action-conditioned future transitions and the actions that explain observed changes. SLIM learns these representations through self-supervised masked trajectory prediction, combining action reconstruction with future-latent prediction. A compact Mixture-of-Transformers (MoT) backbone models interactions between observation latents and action tokens. The resulting policy is trained with flow matching for language-conditioned action generation. Across simulation benchmarks and real-world evaluation, SLIM matches or exceeds representative large-scale VLA and world-action-model baselines with fewer parameters, no additional embodied pretraining, lower inference latency, and substantially lower GPU memory usage.",
+      "published": "2026-08-10T15:58:39Z",
+      "comment": "18 pages, 11 figures. Project page: https://kzz1031.github.io/slim-project-page/",
+      "primary_category": "cs.RO",
+      "authors": [
+        "Jingkai Wang",
+        "Zihan Tang",
+        "Gu Zhang",
+        "Mingyu Cao",
+        "Jiapeng Chen",
+        "Jingjiao Zhao",
+        "Xiansheng Chen",
+        "Pengwei Wang",
+        "Lemao Liu",
+        "Dejing Dou"
+      ]
+    },
+    {
+      "id": "2604.19877v1",
+      "title": "Super Apriel: One Checkpoint, Many Speeds",
+      "pdf_url": "https://arxiv.org/pdf/2604.19877v1",
+      "summary": "We release Super Apriel, a 15B-parameter supernet in which every decoder layer provides four trained mixer choices -- Full Attention (FA), Sliding Window Attention (SWA), Kimi Delta Attention (KDA), and Gated DeltaNet (GDN). A placement selects one mixer per layer; placements can be switched between requests at serving time without reloading weights, enabling multiple speed presets from a single checkpoint. The shared checkpoint also enables speculative decoding without a separate draft model. The all-FA preset matches the Apriel 1.6 teacher on all reported benchmarks; recommended hybrid presets span $2.9\\times$ to $10.7\\times$ decode throughput at 96% to 77% quality retention, with throughput advantages that compound at longer context lengths. With four mixer types across 48 layers, the configuration space is vast. A surrogate that predicts placement quality from the per-layer mixer assignment makes the speed-quality landscape tractable and identifies the best tradeoffs at each speed level. We investigate whether the best configurations at each speed level can be identified early in training or only after convergence. Rankings stabilize quickly at 0.5B scale, but the most efficient configurations exhibit higher instability at 15B, cautioning against extrapolation from smaller models. Super Apriel is trained by stochastic distillation from a frozen Apriel 1.6 teacher, followed by supervised fine-tuning. We release the supernet weights, Fast-LLM training code, vLLM serving code, and a placement optimization toolkit.",
+      "published": "2026-04-21T18:00:25Z",
+      "comment": "Models: https://huggingface.co/ServiceNow-AI/SuperApriel-15B-Base and https://huggingface.co/ServiceNow-AI/SuperApriel-15B-Instruct . Dev model: https://huggingface.co/ServiceNow-AI/SuperApriel-0.5B-Base . Training code: https://github.com/ServiceNow/Fast-LLM . Async RL: https://github.com/ServiceNow/pipeline-rl . Training logs: https://wandb.ai/servicenow-team/Super_Apriel",
+      "primary_category": "cs.LG",
+      "authors": [
+        "SLAM Labs",
+        " :",
+        "Oleksiy Ostapenko",
+        "Raymond Li",
+        "Torsten Scholak",
+        "Alireza Mousavi-Hosseini",
+        "Aman Tiwari",
+        "Denis Kocetkov",
+        "Joel Lamy Poirier",
+        "Kelechi Ogueji",
+        "Nanda H Krishna",
+        "Rafael Pardinas",
+        "Sathwik Tejaswi Madhusudhan",
+        "Shruthan Radhakrishna",
+        "Srinivas Sunkara",
+        "Valerie Becaert"
+      ]
+    },
+    {
+      "id": "2410.18505v2",
+      "title": "CCI3.0-HQ: a large-scale Chinese dataset of high quality designed for pre-training large language models",
+      "pdf_url": "https://arxiv.org/pdf/2410.18505v2",
+      "summary": "We present CCI3.0-HQ (https://huggingface.co/datasets/BAAI/CCI3-HQ), a high-quality 500GB subset of the Chinese Corpora Internet 3.0 (CCI3.0)(https://huggingface.co/datasets/BAAI/CCI3-Data), developed using a novel two-stage hybrid filtering pipeline that significantly enhances data quality. To evaluate its effectiveness, we trained a 0.5B parameter model from scratch on 100B tokens across various datasets, achieving superior performance on 10 benchmarks in a zero-shot setting compared to CCI3.0, SkyPile, and WanjuanV1. The high-quality filtering process effectively distills the capabilities of the Qwen2-72B-instruct model into a compact 0.5B model, attaining optimal F1 scores for Chinese web data classification. We believe this open-access dataset will facilitate broader access to high-quality language models.",
+      "published": "2024-10-24T07:50:07Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Liangdong Wang",
+        "Bo-Wen Zhang",
+        "Chengwei Wu",
+        "Hanyu Zhao",
+        "Xiaofeng Shi",
+        "Shuhao Gu",
+        "Jijie Li",
+        "Quanyue Ma",
+        "TengFei Pan",
+        "Guang Liu"
+      ]
+    },
+    {
+      "id": "2602.07954v4",
+      "title": "Bielik Guard: Efficient Polish Language Safety Classifiers for LLM Content Moderation",
+      "pdf_url": "https://arxiv.org/pdf/2602.07954v4",
+      "summary": "As Large Language Models (LLMs) become increasingly deployed in Polish language applications, the need for efficient and accurate content safety classifiers has become paramount. We present Bielik Guard, a family of compact Polish language safety classifiers comprising two model variants: a 0.1B parameter model based on MMLW-RoBERTa-base and a 0.5B parameter model based on PKOBP/polish-roberta-8k. Fine-tuned on a community-annotated dataset of 6,885 Polish texts, these models classify content across five safety categories: Hate/Aggression, Vulgarities, Sexual Content, Crime, and Self-Harm. Our evaluation demonstrates that both models achieve strong performance on multiple benchmarks. The 0.5B variant offers the best overall discrimination capability with F1 scores of 0.791 (micro) and 0.785 (macro) on the test set, while the 0.1B variant demonstrates exceptional efficiency. Notably, Bielik Guard 0.1B v1.1 achieves superior precision (77.65%) and very low false positive rate (0.63%) on real user prompts, outperforming HerBERT-PL-Guard (31.55% precision, 4.70% FPR) despite identical model size. The models are publicly available and designed to provide appropriate responses rather than simple content blocking, particularly for sensitive categories like self-harm.",
+      "published": "2026-02-08T12:57:04Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Krzysztof Wr\u00f3bel",
+        "Jan Maria Kowalski",
+        "Jerzy Surma",
+        "Igor Ciuciura",
+        "Maciej Szyma\u0144ski"
+      ]
+    }
+  ]
+}

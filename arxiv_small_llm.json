@@ -1,0 +1,278 @@
+{
+  "status": "success",
+  "results_count": 1,
+  "papers": [
+    {
+      "id": "2503.21676v2",
+      "title": "How do language models learn facts? Dynamics, curricula and hallucinations",
+      "pdf_url": "https://arxiv.org/pdf/2503.21676v2",
+      "summary": "Large language models accumulate vast knowledge during pre-training, yet the dynamics governing this acquisition remain poorly understood. This work investigates the learning dynamics of language models on a synthetic factual recall task, uncovering three key findings: First, language models learn in three phases, exhibiting a performance plateau before acquiring precise factual knowledge. Mechanistically, this plateau coincides with the formation of attention-based circuits that support recall. Second, the training data distribution significantly impacts learning dynamics, as imbalanced distributions lead to shorter plateaus. Finally, hallucinations emerge simultaneously with knowledge, and integrating new knowledge into the model through fine-tuning is challenging, as it quickly corrupts its existing parametric memories. Our results emphasize the importance of data distribution in knowledge acquisition and suggest novel data scheduling strategies to accelerate neural network training.",
+      "published": "2025-03-27T16:43:45Z",
+      "comment": "Accepted at the 2nd Conference on Language Modeling (2025)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Conference on Language Modeling (2025)",
+      "authors": [
+        "Nicolas Zucchet",
+        "J\u00f6rg Bornschein",
+        "Stephanie Chan",
+        "Andrew Lampinen",
+        "Razvan Pascanu",
+        "Soham De"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 2,
+  "papers": [
+    {
+      "id": "2503.21676v2",
+      "title": "How do language models learn facts? Dynamics, curricula and hallucinations",
+      "pdf_url": "https://arxiv.org/pdf/2503.21676v2",
+      "summary": "Large language models accumulate vast knowledge during pre-training, yet the dynamics governing this acquisition remain poorly understood. This work investigates the learning dynamics of language models on a synthetic factual recall task, uncovering three key findings: First, language models learn in three phases, exhibiting a performance plateau before acquiring precise factual knowledge. Mechanistically, this plateau coincides with the formation of attention-based circuits that support recall. Second, the training data distribution significantly impacts learning dynamics, as imbalanced distributions lead to shorter plateaus. Finally, hallucinations emerge simultaneously with knowledge, and integrating new knowledge into the model through fine-tuning is challenging, as it quickly corrupts its existing parametric memories. Our results emphasize the importance of data distribution in knowledge acquisition and suggest novel data scheduling strategies to accelerate neural network training.",
+      "published": "2025-03-27T16:43:45Z",
+      "comment": "Accepted at the 2nd Conference on Language Modeling (2025)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Conference on Language Modeling (2025)",
+      "authors": [
+        "Nicolas Zucchet",
+        "J\u00f6rg Bornschein",
+        "Stephanie Chan",
+        "Andrew Lampinen",
+        "Razvan Pascanu",
+        "Soham De"
+      ]
+    },
+    {
+      "id": "1610.00031v1",
+      "title": "Discriminating Similar Languages: Evaluations and Explorations",
+      "pdf_url": "https://arxiv.org/pdf/1610.00031v1",
+      "summary": "We present an analysis of the performance of machine learning classifiers on discriminating between similar languages and language varieties. We carried out a number of experiments using the results of the two editions of the Discriminating between Similar Languages (DSL) shared task. We investigate the progress made between the two tasks, estimate an upper bound on possible performance using ensemble and oracle combination, and provide learning curves to help us understand which languages are more challenging. A number of difficult sentences are identified and investigated further with human annotation.",
+      "published": "2016-09-30T20:57:52Z",
+      "comment": "Proceedings of Language Resources and Evaluation (LREC)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Proceedings of Language Resources and Evaluation (LREC). Portoroz, Slovenia. pp 1800-1807 (2016)",
+      "authors": [
+        "Cyril Goutte",
+        "Serge L\u00e9ger",
+        "Shervin Malmasi",
+        "Marcos Zampieri"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 3,
+  "papers": [
+    {
+      "id": "2503.21676v2",
+      "title": "How do language models learn facts? Dynamics, curricula and hallucinations",
+      "pdf_url": "https://arxiv.org/pdf/2503.21676v2",
+      "summary": "Large language models accumulate vast knowledge during pre-training, yet the dynamics governing this acquisition remain poorly understood. This work investigates the learning dynamics of language models on a synthetic factual recall task, uncovering three key findings: First, language models learn in three phases, exhibiting a performance plateau before acquiring precise factual knowledge. Mechanistically, this plateau coincides with the formation of attention-based circuits that support recall. Second, the training data distribution significantly impacts learning dynamics, as imbalanced distributions lead to shorter plateaus. Finally, hallucinations emerge simultaneously with knowledge, and integrating new knowledge into the model through fine-tuning is challenging, as it quickly corrupts its existing parametric memories. Our results emphasize the importance of data distribution in knowledge acquisition and suggest novel data scheduling strategies to accelerate neural network training.",
+      "published": "2025-03-27T16:43:45Z",
+      "comment": "Accepted at the 2nd Conference on Language Modeling (2025)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Conference on Language Modeling (2025)",
+      "authors": [
+        "Nicolas Zucchet",
+        "J\u00f6rg Bornschein",
+        "Stephanie Chan",
+        "Andrew Lampinen",
+        "Razvan Pascanu",
+        "Soham De"
+      ]
+    },
+    {
+      "id": "1610.00031v1",
+      "title": "Discriminating Similar Languages: Evaluations and Explorations",
+      "pdf_url": "https://arxiv.org/pdf/1610.00031v1",
+      "summary": "We present an analysis of the performance of machine learning classifiers on discriminating between similar languages and language varieties. We carried out a number of experiments using the results of the two editions of the Discriminating between Similar Languages (DSL) shared task. We investigate the progress made between the two tasks, estimate an upper bound on possible performance using ensemble and oracle combination, and provide learning curves to help us understand which languages are more challenging. A number of difficult sentences are identified and investigated further with human annotation.",
+      "published": "2016-09-30T20:57:52Z",
+      "comment": "Proceedings of Language Resources and Evaluation (LREC)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Proceedings of Language Resources and Evaluation (LREC). Portoroz, Slovenia. pp 1800-1807 (2016)",
+      "authors": [
+        "Cyril Goutte",
+        "Serge L\u00e9ger",
+        "Shervin Malmasi",
+        "Marcos Zampieri"
+      ]
+    },
+    {
+      "id": "2512.11769v1",
+      "title": "BLURR: A Boosted Low-Resource Inference for Vision-Language-Action Models",
+      "pdf_url": "https://arxiv.org/pdf/2512.11769v1",
+      "summary": "Vision-language-action (VLA) models enable impressive zero shot manipulation, but their inference stacks are often too heavy for responsive web demos or high frequency robot control on commodity GPUs. We present BLURR, a lightweight inference wrapper that can be plugged into existing VLA controllers without retraining or changing model checkpoints. Instantiated on the pi-zero VLA controller, BLURR keeps the original observation interfaces and accelerates control by combining an instruction prefix key value cache, mixed precision execution, and a single step rollout schedule that reduces per step computation. In our SimplerEnv based evaluation, BLURR maintains task success rates comparable to the original controller while significantly lowering effective FLOPs and wall clock latency. We also build an interactive web demo that allows users to switch between controllers and toggle inference options in real time while watching manipulation episodes. This highlights BLURR as a practical approach for deploying modern VLA policies under tight compute budgets.",
+      "published": "2025-12-12T18:30:45Z",
+      "comment": "10 pages, 3 figures. Code and integration scripts will be released at this http URL: https://github.com/JijiKing-Sam/BLURR-A-Boosted-Low-Resource-Inference-for-Vision-Language-Action-Model",
+      "primary_category": "cs.RO",
+      "authors": [
+        "Xiaoyu Ma",
+        "Zhengqing Yuan",
+        "Zheyuan Zhang",
+        "Kaiwen Shi",
+        "Lichao Sun",
+        "Yanfang Ye"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 4,
+  "papers": [
+    {
+      "id": "2503.21676v2",
+      "title": "How do language models learn facts? Dynamics, curricula and hallucinations",
+      "pdf_url": "https://arxiv.org/pdf/2503.21676v2",
+      "summary": "Large language models accumulate vast knowledge during pre-training, yet the dynamics governing this acquisition remain poorly understood. This work investigates the learning dynamics of language models on a synthetic factual recall task, uncovering three key findings: First, language models learn in three phases, exhibiting a performance plateau before acquiring precise factual knowledge. Mechanistically, this plateau coincides with the formation of attention-based circuits that support recall. Second, the training data distribution significantly impacts learning dynamics, as imbalanced distributions lead to shorter plateaus. Finally, hallucinations emerge simultaneously with knowledge, and integrating new knowledge into the model through fine-tuning is challenging, as it quickly corrupts its existing parametric memories. Our results emphasize the importance of data distribution in knowledge acquisition and suggest novel data scheduling strategies to accelerate neural network training.",
+      "published": "2025-03-27T16:43:45Z",
+      "comment": "Accepted at the 2nd Conference on Language Modeling (2025)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Conference on Language Modeling (2025)",
+      "authors": [
+        "Nicolas Zucchet",
+        "J\u00f6rg Bornschein",
+        "Stephanie Chan",
+        "Andrew Lampinen",
+        "Razvan Pascanu",
+        "Soham De"
+      ]
+    },
+    {
+      "id": "1610.00031v1",
+      "title": "Discriminating Similar Languages: Evaluations and Explorations",
+      "pdf_url": "https://arxiv.org/pdf/1610.00031v1",
+      "summary": "We present an analysis of the performance of machine learning classifiers on discriminating between similar languages and language varieties. We carried out a number of experiments using the results of the two editions of the Discriminating between Similar Languages (DSL) shared task. We investigate the progress made between the two tasks, estimate an upper bound on possible performance using ensemble and oracle combination, and provide learning curves to help us understand which languages are more challenging. A number of difficult sentences are identified and investigated further with human annotation.",
+      "published": "2016-09-30T20:57:52Z",
+      "comment": "Proceedings of Language Resources and Evaluation (LREC)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Proceedings of Language Resources and Evaluation (LREC). Portoroz, Slovenia. pp 1800-1807 (2016)",
+      "authors": [
+        "Cyril Goutte",
+        "Serge L\u00e9ger",
+        "Shervin Malmasi",
+        "Marcos Zampieri"
+      ]
+    },
+    {
+      "id": "2512.11769v1",
+      "title": "BLURR: A Boosted Low-Resource Inference for Vision-Language-Action Models",
+      "pdf_url": "https://arxiv.org/pdf/2512.11769v1",
+      "summary": "Vision-language-action (VLA) models enable impressive zero shot manipulation, but their inference stacks are often too heavy for responsive web demos or high frequency robot control on commodity GPUs. We present BLURR, a lightweight inference wrapper that can be plugged into existing VLA controllers without retraining or changing model checkpoints. Instantiated on the pi-zero VLA controller, BLURR keeps the original observation interfaces and accelerates control by combining an instruction prefix key value cache, mixed precision execution, and a single step rollout schedule that reduces per step computation. In our SimplerEnv based evaluation, BLURR maintains task success rates comparable to the original controller while significantly lowering effective FLOPs and wall clock latency. We also build an interactive web demo that allows users to switch between controllers and toggle inference options in real time while watching manipulation episodes. This highlights BLURR as a practical approach for deploying modern VLA policies under tight compute budgets.",
+      "published": "2025-12-12T18:30:45Z",
+      "comment": "10 pages, 3 figures. Code and integration scripts will be released at this http URL: https://github.com/JijiKing-Sam/BLURR-A-Boosted-Low-Resource-Inference-for-Vision-Language-Action-Model",
+      "primary_category": "cs.RO",
+      "authors": [
+        "Xiaoyu Ma",
+        "Zhengqing Yuan",
+        "Zheyuan Zhang",
+        "Kaiwen Shi",
+        "Lichao Sun",
+        "Yanfang Ye"
+      ]
+    },
+    {
+      "id": "1501.03191v1",
+      "title": "Annotating Cognates and Etymological Origin in Turkic Languages",
+      "pdf_url": "https://arxiv.org/pdf/1501.03191v1",
+      "summary": "Turkic languages exhibit extensive and diverse etymological relationships among lexical items. These relationships make the Turkic languages promising for exploring automated translation lexicon induction by leveraging cognate and other etymological information. However, due to the extent and diversity of the types of relationships between words, it is not clear how to annotate such information. In this paper, we present a methodology for annotating cognates and etymological origin in Turkic languages. Our method strives to balance the amount of research effort the annotator expends with the utility of the annotations for supporting research on improving automated translation lexicon induction.",
+      "published": "2015-01-13T22:14:57Z",
+      "comment": "5 pages, 8 tables; appeared in Proceedings of the First Workshop on Language Resources and Technologies for Turkic Languages at the Eighth International Conference on Language Resources and Evaluation (LREC'12), pages 47-51, Istanbul, Turkey, May 2012. European Language Resources Association",
+      "primary_category": "cs.CL",
+      "journal_ref": "In Proceedings of the First Workshop on Language Resources and Technologies for Turkic Languages at LREC'12, pages 47-51, Istanbul, Turkey, May 2012. European Language Resources Association",
+      "authors": [
+        "Benjamin S. Mericli",
+        "Michael Bloodgood"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 5,
+  "papers": [
+    {
+      "id": "2503.21676v2",
+      "title": "How do language models learn facts? Dynamics, curricula and hallucinations",
+      "pdf_url": "https://arxiv.org/pdf/2503.21676v2",
+      "summary": "Large language models accumulate vast knowledge during pre-training, yet the dynamics governing this acquisition remain poorly understood. This work investigates the learning dynamics of language models on a synthetic factual recall task, uncovering three key findings: First, language models learn in three phases, exhibiting a performance plateau before acquiring precise factual knowledge. Mechanistically, this plateau coincides with the formation of attention-based circuits that support recall. Second, the training data distribution significantly impacts learning dynamics, as imbalanced distributions lead to shorter plateaus. Finally, hallucinations emerge simultaneously with knowledge, and integrating new knowledge into the model through fine-tuning is challenging, as it quickly corrupts its existing parametric memories. Our results emphasize the importance of data distribution in knowledge acquisition and suggest novel data scheduling strategies to accelerate neural network training.",
+      "published": "2025-03-27T16:43:45Z",
+      "comment": "Accepted at the 2nd Conference on Language Modeling (2025)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Conference on Language Modeling (2025)",
+      "authors": [
+        "Nicolas Zucchet",
+        "J\u00f6rg Bornschein",
+        "Stephanie Chan",
+        "Andrew Lampinen",
+        "Razvan Pascanu",
+        "Soham De"
+      ]
+    },
+    {
+      "id": "1610.00031v1",
+      "title": "Discriminating Similar Languages: Evaluations and Explorations",
+      "pdf_url": "https://arxiv.org/pdf/1610.00031v1",
+      "summary": "We present an analysis of the performance of machine learning classifiers on discriminating between similar languages and language varieties. We carried out a number of experiments using the results of the two editions of the Discriminating between Similar Languages (DSL) shared task. We investigate the progress made between the two tasks, estimate an upper bound on possible performance using ensemble and oracle combination, and provide learning curves to help us understand which languages are more challenging. A number of difficult sentences are identified and investigated further with human annotation.",
+      "published": "2016-09-30T20:57:52Z",
+      "comment": "Proceedings of Language Resources and Evaluation (LREC)",
+      "primary_category": "cs.CL",
+      "journal_ref": "Proceedings of Language Resources and Evaluation (LREC). Portoroz, Slovenia. pp 1800-1807 (2016)",
+      "authors": [
+        "Cyril Goutte",
+        "Serge L\u00e9ger",
+        "Shervin Malmasi",
+        "Marcos Zampieri"
+      ]
+    },
+    {
+      "id": "2512.11769v1",
+      "title": "BLURR: A Boosted Low-Resource Inference for Vision-Language-Action Models",
+      "pdf_url": "https://arxiv.org/pdf/2512.11769v1",
+      "summary": "Vision-language-action (VLA) models enable impressive zero shot manipulation, but their inference stacks are often too heavy for responsive web demos or high frequency robot control on commodity GPUs. We present BLURR, a lightweight inference wrapper that can be plugged into existing VLA controllers without retraining or changing model checkpoints. Instantiated on the pi-zero VLA controller, BLURR keeps the original observation interfaces and accelerates control by combining an instruction prefix key value cache, mixed precision execution, and a single step rollout schedule that reduces per step computation. In our SimplerEnv based evaluation, BLURR maintains task success rates comparable to the original controller while significantly lowering effective FLOPs and wall clock latency. We also build an interactive web demo that allows users to switch between controllers and toggle inference options in real time while watching manipulation episodes. This highlights BLURR as a practical approach for deploying modern VLA policies under tight compute budgets.",
+      "published": "2025-12-12T18:30:45Z",
+      "comment": "10 pages, 3 figures. Code and integration scripts will be released at this http URL: https://github.com/JijiKing-Sam/BLURR-A-Boosted-Low-Resource-Inference-for-Vision-Language-Action-Model",
+      "primary_category": "cs.RO",
+      "authors": [
+        "Xiaoyu Ma",
+        "Zhengqing Yuan",
+        "Zheyuan Zhang",
+        "Kaiwen Shi",
+        "Lichao Sun",
+        "Yanfang Ye"
+      ]
+    },
+    {
+      "id": "1501.03191v1",
+      "title": "Annotating Cognates and Etymological Origin in Turkic Languages",
+      "pdf_url": "https://arxiv.org/pdf/1501.03191v1",
+      "summary": "Turkic languages exhibit extensive and diverse etymological relationships among lexical items. These relationships make the Turkic languages promising for exploring automated translation lexicon induction by leveraging cognate and other etymological information. However, due to the extent and diversity of the types of relationships between words, it is not clear how to annotate such information. In this paper, we present a methodology for annotating cognates and etymological origin in Turkic languages. Our method strives to balance the amount of research effort the annotator expends with the utility of the annotations for supporting research on improving automated translation lexicon induction.",
+      "published": "2015-01-13T22:14:57Z",
+      "comment": "5 pages, 8 tables; appeared in Proceedings of the First Workshop on Language Resources and Technologies for Turkic Languages at the Eighth International Conference on Language Resources and Evaluation (LREC'12), pages 47-51, Istanbul, Turkey, May 2012. European Language Resources Association",
+      "primary_category": "cs.CL",
+      "journal_ref": "In Proceedings of the First Workshop on Language Resources and Technologies for Turkic Languages at LREC'12, pages 47-51, Istanbul, Turkey, May 2012. European Language Resources Association",
+      "authors": [
+        "Benjamin S. Mericli",
+        "Michael Bloodgood"
+      ]
+    },
+    {
+      "id": "2603.27043v2",
+      "title": "Introducing MELI: the Mandarin-English Language Interview Corpus",
+      "pdf_url": "https://arxiv.org/pdf/2603.27043v2",
+      "summary": "We introduce the Mandarin-English Language Interview (MELI) Corpus, an open-source resource of 29.8 hours of speech from 51 Mandarin-English bilingual speakers. MELI combines matched sessions in Mandarin and English with two speaking styles: read sentences and spontaneous interviews about language varieties, standardness, and learning experiences. Audio was recorded at 44.1 kHz (16-bit, stereo). Interviews were fully transcribed, force-aligned at word and phone levels, and anonymized. Descriptively, the Mandarin component totals ~14.7 hours (mean duration 17.3 minutes) and the English component ~15.1 hours (mean duration 17.8 minutes). We report token/type statistics for each language and document code-switching patterns (frequent in Mandarin sessions; more limited in English sessions). The corpus design supports within-/cross-speaker, within/cross-language acoustic comparison and links acoustics to speakers' stated language attitudes, enabling both quantitative and qualitative analyses. The MELI Corpus will be released with transcriptions, alignments, metadata, scans of labelled maps and documentation under a CC BY-NC 4.0 license.",
+      "published": "2026-03-27T23:15:30Z",
+      "comment": "Accepted at LREC 2026 (14th International Conference on Language Resources and Evaluation), to appear in the conference proceedings",
+      "primary_category": "cs.CL",
+      "journal_ref": "In Proceedings of the Fifteenth Language Resources and Evaluation Conference (pp. 5896-5904). European Language Resources Association (ELRA) 2026",
+      "doi": "10.63317/3umiyc4sxwhk",
+      "authors": [
+        "Suyuan Liu",
+        "Molly Babel"
+      ]
+    }
+  ]
+}
