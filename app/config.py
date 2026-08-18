@@ -31,7 +31,7 @@ INDEX_SIZE = 500_000          # Number of passages to index
 LMSTUDIO_URL = os.getenv("LMSTUDIO_URL", "http://127.0.0.1:2000/v1")
 LLAMA_CPP_URL = os.getenv("LLAMA_CPP_URL", "http://localhost:8081")
 LOCAL_LLM_MODEL = os.getenv("LOCAL_LLM_MODEL", "SupraLabs/Supra2-100M-Instruct")
-LLM_MAX_TOKENS = 18
+LLM_MAX_TOKENS = 200
 LLM_TEMPERATURE = 0.1
 LLM_REPEAT_PENALTY = 1.3
 
