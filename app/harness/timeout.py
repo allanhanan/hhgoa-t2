@@ -12,12 +12,14 @@ async def with_timeout(coro, timeout_ms: float | None = None) -> PipelineResult:
 
     If the timeout is exceeded, returns a partial result with an error message.
     """
-    timeout_s = (timeout_ms or LATENCY_BUDGET_MS) / 1000.0
+    from app import config
+    budget = timeout_ms or getattr(config, "LATENCY_BUDGET_MS", 3000)
+    timeout_s = float(budget) / 1000.0
 
     try:
         return await asyncio.wait_for(coro, timeout=timeout_s)
     except asyncio.TimeoutError:
         return PipelineResult(
             answer="Processing took too long. Please try a shorter query.",
-            error=f"Pipeline exceeded {timeout_ms or LATENCY_BUDGET_MS}ms timeout",
+            error=f"Pipeline exceeded {budget}ms timeout",
         )

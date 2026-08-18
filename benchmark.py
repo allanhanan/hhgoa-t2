@@ -110,9 +110,10 @@ def run_retrieval_benchmark(queries: list[str], n_runs: int = 100):
     print(f"\n{'='*70}")
     print(f"RETRIEVAL BENCHMARK ({n_runs} queries)")
     print(f"{'='*70}")
-    print(f"{'stage':<15}{'avg':>8}{'P50':>8}{'P70':>8}{'P100':>8}   (ms)")
-    print(f"{'-'*55}")
+    print(f"{'stage':<15}{'avg':>8}{'P50':>8}{'P70':>8}{'P95':>8}{'P100':>8}   (ms)")
+    print(f"{'-'*63}")
 
+    results = {}
     for name, values in [
         ("embed", embed_ms_list),
         ("binary_search", search_ms_list),
@@ -120,23 +121,37 @@ def run_retrieval_benchmark(queries: list[str], n_runs: int = 100):
         ("payload", payload_ms_list),
         ("TOTAL", total_ms_list),
     ]:
+        p50 = percentile(values, 50)
+        p70 = percentile(values, 70)
+        p95 = percentile(values, 95)
+        p100 = percentile(values, 100)
+        avg = statistics.mean(values)
+        results[name] = {
+            "avg": round(avg, 2),
+            "p50": round(p50, 2),
+            "p70": round(p70, 2),
+            "p95": round(p95, 2),
+            "p100": round(p100, 2),
+        }
         print(
             f"{name:<15}"
-            f"{statistics.mean(values):>8.2f}"
-            f"{percentile(values, 50):>8.2f}"
-            f"{percentile(values, 70):>8.2f}"
-            f"{percentile(values, 100):>8.2f}"
+            f"{avg:>8.2f}"
+            f"{p50:>8.2f}"
+            f"{p70:>8.2f}"
+            f"{p95:>8.2f}"
+            f"{p100:>8.2f}"
         )
 
     p100_total = percentile(total_ms_list, 100)
-    p70_total = percentile(total_ms_list, 70)
-    print(f"\nBudget: {RETRIEVAL_BUDGET_MS}ms | P70: {p70_total:.2f}ms | P100: {p100_total:.2f}ms")
+    p95_total = percentile(total_ms_list, 95)
+    p50_total = percentile(total_ms_list, 50)
+    print(f"\nBudget: {RETRIEVAL_BUDGET_MS}ms | P50: {p50_total:.2f}ms | P95: {p95_total:.2f}ms | P100: {p100_total:.2f}ms")
     if p100_total <= RETRIEVAL_BUDGET_MS:
-        print("✅ PASS: within retrieval budget")
+        print("[PASS]: within retrieval budget")
     else:
-        print("❌ FAIL: over retrieval budget")
+        print("[FAIL]: over retrieval budget")
 
-    return total_ms_list
+    return results
 
 
 async def run_pipeline_benchmark(queries: list[str], n_runs: int = 50):
@@ -171,31 +186,47 @@ async def run_pipeline_benchmark(queries: list[str], n_runs: int = 50):
     print(f"\n{'='*70}")
     print(f"PIPELINE BENCHMARK ({n_runs} queries)")
     print(f"{'='*70}")
-    print(f"{'stage':<15}{'avg':>8}{'P50':>8}{'P70':>8}{'P100':>8}   (ms)")
-    print(f"{'-'*55}")
+    print(f"{'stage':<15}{'avg':>8}{'P50':>8}{'P70':>8}{'P95':>8}{'P100':>8}   (ms)")
+    print(f"{'-'*63}")
 
+    results = {}
     for name, values in [
         ("retrieval", retrieval_ms_list),
         ("llm_ttft", ttft_ms_list or [0.0]),
         ("TOTAL", total_ms_list),
     ]:
         if values:
+            p50 = percentile(values, 50)
+            p70 = percentile(values, 70)
+            p95 = percentile(values, 95)
+            p100 = percentile(values, 100)
+            avg = statistics.mean(values)
+            results[name] = {
+                "avg": round(avg, 2),
+                "p50": round(p50, 2),
+                "p70": round(p70, 2),
+                "p95": round(p95, 2),
+                "p100": round(p100, 2),
+            }
             print(
                 f"{name:<15}"
-                f"{statistics.mean(values):>8.2f}"
-                f"{percentile(values, 50):>8.2f}"
-                f"{percentile(values, 70):>8.2f}"
-                f"{percentile(values, 100):>8.2f}"
+                f"{avg:>8.2f}"
+                f"{p50:>8.2f}"
+                f"{p70:>8.2f}"
+                f"{p95:>8.2f}"
+                f"{p100:>8.2f}"
             )
 
     p100_total = percentile(total_ms_list, 100)
-    print(f"\nBudget: {LATENCY_BUDGET_MS}ms | P100: {p100_total:.2f}ms")
+    p95_total = percentile(total_ms_list, 95)
+    p50_total = percentile(total_ms_list, 50)
+    print(f"\nBudget: {LATENCY_BUDGET_MS}ms | P50: {p50_total:.2f}ms | P95: {p95_total:.2f}ms | P100: {p100_total:.2f}ms")
     if p100_total <= LATENCY_BUDGET_MS:
-        print("✅ PASS: within pipeline budget")
+        print("[PASS]: within pipeline budget")
     else:
-        print("❌ FAIL: over pipeline budget")
+        print("[FAIL]: over pipeline budget")
 
-    return total_ms_list
+    return results
 
 
 def main():

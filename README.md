@@ -40,8 +40,8 @@ cp .env.example .env
 ### 2. Ingest Dataset
 
 ```bash
-# Download and sample 500K passages from MSMARCO-XI
-python -m ingestion.download_dataset --n-passages 500000
+# Download and sample 10K passages from MSMARCO-XI
+python -m ingestion.download_dataset --n-passages 10000
 
 # Build FAISS binary index + float16 vectors
 python -m ingestion.build_index --strategy passage_as_chunk

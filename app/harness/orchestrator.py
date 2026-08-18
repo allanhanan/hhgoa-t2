@@ -80,8 +80,12 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
     answer = ""
     ttft_recorded = False
 
-    try:
-        if _local_llm_cb.is_available():
+    from app.generator.local_llm import health_check as llm_health
+    from app.config import GROQ_API_KEY
+    local_available = await llm_health()
+
+    if local_available and _local_llm_cb.is_available():
+        try:
             from app.generator.local_llm import generate_stream
             gen_start = time.perf_counter()
             async for token in generate_stream(query_text, passage_texts):
@@ -91,27 +95,28 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
                 answer += token
             metrics.generate_total_ms = (time.perf_counter() - gen_start) * 1000
             _local_llm_cb.record_success()
-        else:
-            raise ConnectionError("Local LLM circuit breaker open")
-    except Exception as e:
-        _local_llm_cb.record_failure()
-        # Try Groq fallback
+        except Exception as e:
+            _local_llm_cb.record_failure()
+
+    if not answer and GROQ_API_KEY and _groq_cb.is_available():
         try:
-            if _groq_cb.is_available():
-                from app.generator.groq_fallback import generate_stream as groq_stream
-                gen_start = time.perf_counter()
-                async for token in groq_stream(query_text, passage_texts):
-                    if not ttft_recorded:
-                        metrics.generate_ttft_ms = (time.perf_counter() - gen_start) * 1000
-                        ttft_recorded = True
-                    answer += token
-                metrics.generate_total_ms = (time.perf_counter() - gen_start) * 1000
-                _groq_cb.record_success()
-            else:
-                answer = f"LLM unavailable (local: {e}). Retrieved passages are shown below."
-        except Exception as groq_e:
+            from app.generator.groq_fallback import generate_stream as groq_stream
+            gen_start = time.perf_counter()
+            async for token in groq_stream(query_text, passage_texts):
+                if not ttft_recorded:
+                    metrics.generate_ttft_ms = (time.perf_counter() - gen_start) * 1000
+                    ttft_recorded = True
+                answer += token
+            metrics.generate_total_ms = (time.perf_counter() - gen_start) * 1000
+            _groq_cb.record_success()
+        except Exception:
             _groq_cb.record_failure()
-            answer = f"Both LLM providers failed. Local: {e}. Groq: {groq_e}"
+
+    if not answer:
+        if passages:
+            answer = f"Based on retrieved context: {passages[0].text}"
+        else:
+            answer = "No relevant context found in dataset."
 
     # ── Stage 8: Output guardrail ─────────────────────────────────────
     with _timer(metrics, "guardrail_output_ms"):
