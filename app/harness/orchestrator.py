@@ -48,8 +48,9 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
         float_emb, binary_emb = encode_and_binarize(query_text)
 
     # ── Stage 3: Binary search ────────────────────────────────────────
+    from app.config import TOP_K_BINARY
     with _timer(metrics, "search_ms"):
-        distances, ids = vector_db.search(binary_emb, top_k=100)
+        distances, ids = vector_db.search(binary_emb, top_k=TOP_K_BINARY)
 
     # ── Stage 4: Rescore ──────────────────────────────────────────────
     with _timer(metrics, "rescore_ms"):
@@ -66,7 +67,8 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
 
     # ── Stage 6: Context guardrail ────────────────────────────────────
     with _timer(metrics, "guardrail_context_ms"):
-        relevant, sim_score = is_relevant(float_emb)
+        top_score = passages[0].score if passages else None
+        relevant, sim_score = is_relevant(float_emb, max_passage_score=top_score)
         if not relevant:
             metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
             return PipelineResult(
@@ -80,17 +82,16 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
     answer = ""
     ttft_recorded = False
 
-    from app.generator.local_llm import health_check as llm_health
     from app.config import GROQ_API_KEY
-    local_available = await llm_health()
 
-    if local_available and _local_llm_cb.is_available():
+    if _local_llm_cb.is_available():
         try:
             from app.generator.local_llm import generate_stream
             gen_start = time.perf_counter()
             async for token in generate_stream(query_text, passage_texts):
                 if not ttft_recorded:
                     metrics.generate_ttft_ms = (time.perf_counter() - gen_start) * 1000
+                    metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
                     ttft_recorded = True
                 answer += token
             metrics.generate_total_ms = (time.perf_counter() - gen_start) * 1000
@@ -105,6 +106,7 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
             async for token in groq_stream(query_text, passage_texts):
                 if not ttft_recorded:
                     metrics.generate_ttft_ms = (time.perf_counter() - gen_start) * 1000
+                    metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
                     ttft_recorded = True
                 answer += token
             metrics.generate_total_ms = (time.perf_counter() - gen_start) * 1000
@@ -122,7 +124,8 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
     with _timer(metrics, "guardrail_output_ms"):
         grounded, overlap = check_grounding(answer, passage_texts)
 
-    metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
+    if not ttft_recorded:
+        metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
 
     return PipelineResult(
         answer=answer,

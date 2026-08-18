@@ -56,9 +56,9 @@ def rescore(
     if len(valid_ids) == 0:
         return []
 
-    # Limit to top 8 candidates to avoid random 5GB disk page faults
-    if len(valid_ids) > 8:
-        valid_ids = valid_ids[:8]
+    from app.config import TOP_K_BINARY
+    if len(valid_ids) > TOP_K_BINARY:
+        valid_ids = valid_ids[:TOP_K_BINARY]
 
     # Fetch float16 vectors for candidates
     try:

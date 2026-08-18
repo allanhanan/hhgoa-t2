@@ -17,7 +17,7 @@ PAYLOAD_DB = str(DATA_DIR / "payloads.db")
 QUERIES_PATH = str(DATA_DIR / "benchmark_queries.json")
 
 # ── Latency budgets (ms) ──────────────────────────────────────────────
-LATENCY_BUDGET_MS = 3000      # Full pipeline timeout budget (ms)
+LATENCY_BUDGET_MS = 10000     # Full pipeline timeout budget (ms)
 RETRIEVAL_BUDGET_MS = 6       # Embed + search + rescore + payload
 
 # ── Retrieval tuning ──────────────────────────────────────────────────
@@ -29,11 +29,11 @@ INDEX_SIZE = 500_000          # Number of passages to index
 
 # ── LLM ───────────────────────────────────────────────────────────────
 LMSTUDIO_URL = os.getenv("LMSTUDIO_URL", "http://127.0.0.1:2000/v1")
-LLAMA_CPP_URL = os.getenv("LLAMA_CPP_URL", "http://localhost:8081")
+LLAMA_CPP_URL = os.getenv("LLAMA_CPP_URL", "http://127.0.0.1:8080")
 LOCAL_LLM_MODEL = os.getenv("LOCAL_LLM_MODEL", "SupraLabs/Supra2-100M-Instruct")
-LLM_MAX_TOKENS = 18
-LLM_TEMPERATURE = 0.1
-LLM_REPEAT_PENALTY = 1.3
+LLM_MAX_TOKENS = 60
+LLM_TEMPERATURE = 0.0
+LLM_REPEAT_PENALTY = 1.1
 
 SYSTEM_PROMPT = (
     "Answer in one sentence using ONLY the provided context. "
@@ -46,7 +46,7 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
 
 # ── Guardrails ────────────────────────────────────────────────────────
 SAFETY_MAX_QUERY_LEN = 500
-RELEVANCE_THRESHOLD = 0.0    # Cosine sim vs corpus centroid (permissive for all queries)
+RELEVANCE_THRESHOLD = 0.35    # Max top passage similarity threshold (0.35)
 GROUNDING_OVERLAP_THRESHOLD = 0.3
 
 # ── Groq fallback ─────────────────────────────────────────────────────

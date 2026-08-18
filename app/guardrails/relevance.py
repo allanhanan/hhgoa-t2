@@ -21,17 +21,18 @@ def compute_centroid_from_vectors(vectors: NDArray) -> NDArray[np.float32]:
     return centroid / (np.linalg.norm(centroid) + 1e-8)
 
 
-def is_relevant(query_embedding: NDArray[np.float32]) -> tuple[bool, float]:
+def is_relevant(query_embedding: NDArray[np.float32], max_passage_score: float | None = None) -> tuple[bool, float]:
     """Check if a query is relevant to the indexed corpus.
 
-    Uses cosine similarity between query and the corpus centroid.
-    Cheap because query embedding is already computed for retrieval.
+    Evaluates max top passage similarity score or corpus centroid similarity.
 
     Returns:
         (is_relevant, similarity_score)
     """
+    if max_passage_score is not None:
+        return max_passage_score >= RELEVANCE_THRESHOLD, max_passage_score
+
     if _corpus_centroid is None:
-        # No centroid loaded — skip check, assume relevant
         return True, 1.0
 
     query_norm = query_embedding / (np.linalg.norm(query_embedding) + 1e-8)

@@ -31,6 +31,19 @@ def _build_prompt(query: str, passages: list[str]) -> str:
     )
 
 
+_shared_client: httpx.AsyncClient | None = None
+
+
+def _get_client() -> httpx.AsyncClient:
+    """Get or create shared persistent HTTP client with connection pooling."""
+    global _shared_client
+    if _shared_client is None or _shared_client.is_closed:
+        fast_timeout = httpx.Timeout(connect=0.15, read=5.0, write=2.0, pool=2.0)
+        limits = httpx.Limits(max_keepalive_connections=10, max_connections=20)
+        _shared_client = httpx.AsyncClient(timeout=fast_timeout, limits=limits)
+    return _shared_client
+
+
 async def generate_stream(
     query: str,
     passages: list[str],
@@ -41,44 +54,9 @@ async def generate_stream(
     Yields individual tokens as they arrive via SSE.
     """
     context = "\n\n".join(f"[{i+1}] {p}" for i, p in enumerate(passages))
+    client = _get_client()
 
-    # 1. Try LM Studio OpenAI API (http://127.0.0.1:2000/v1/chat/completions)
-    try:
-        lm_payload = {
-            "model": LOCAL_LLM_MODEL,
-            "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {query}"}
-            ],
-            "max_tokens": max_tokens or LLM_MAX_TOKENS,
-            "temperature": LLM_TEMPERATURE,
-            "stream": True,
-        }
-
-        async with httpx.AsyncClient(timeout=2.0) as client:
-            async with client.stream(
-                "POST",
-                f"{LMSTUDIO_URL.rstrip('/')}/chat/completions",
-                json=lm_payload,
-            ) as response:
-                if response.status_code == 200:
-                    async for line in response.aiter_lines():
-                        if line.startswith("data: "):
-                            data = line[6:].strip()
-                            if data == "[DONE]":
-                                break
-                            try:
-                                chunk = json.loads(data)
-                                token = chunk["choices"][0]["delta"].get("content", "")
-                                if token:
-                                    yield token
-                            except (json.JSONDecodeError, KeyError, IndexError):
-                                continue
-                    return
-    except Exception as e:
-        logger.debug(f"LM Studio stream skipped: {e}")
-
-    # 2. Fallback to llama.cpp (http://localhost:8081/completion)
+    # 1. Try llama.cpp server (http://127.0.0.1:8080/completion)
     prompt = _build_prompt(query, passages)
     payload = {
         "prompt": prompt,
@@ -90,13 +68,12 @@ async def generate_stream(
     }
 
     try:
-        async with httpx.AsyncClient(timeout=2.0) as client:
-            async with client.stream(
-                "POST",
-                f"{LLAMA_CPP_URL.rstrip('/')}/completion",
-                json=payload,
-            ) as response:
-                response.raise_for_status()
+        async with client.stream(
+            "POST",
+            f"{LLAMA_CPP_URL.rstrip('/')}/completion",
+            json=payload,
+        ) as response:
+            if response.status_code == 200:
                 async for line in response.aiter_lines():
                     if line.startswith("data: "):
                         data = line[6:].strip()
@@ -109,8 +86,44 @@ async def generate_stream(
                                 yield token
                         except json.JSONDecodeError:
                             continue
+                return
     except Exception as e:
         logger.debug(f"llama.cpp stream skipped: {e}")
+
+    # 2. Fallback to LM Studio OpenAI API (http://127.0.0.1:2000/v1/chat/completions)
+    try:
+        lm_payload = {
+            "model": LOCAL_LLM_MODEL,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {query}"}
+            ],
+            "max_tokens": max_tokens or LLM_MAX_TOKENS,
+            "temperature": LLM_TEMPERATURE,
+            "stream": True,
+        }
+
+        async with client.stream(
+            "POST",
+            f"{LMSTUDIO_URL.rstrip('/')}/chat/completions",
+            json=lm_payload,
+        ) as response:
+            if response.status_code == 200:
+                async for line in response.aiter_lines():
+                    if line.startswith("data: "):
+                        data = line[6:].strip()
+                        if data == "[DONE]":
+                            break
+                        try:
+                            chunk = json.loads(data)
+                            token = chunk["choices"][0]["delta"].get("content", "")
+                            if token:
+                                yield token
+                        except (json.JSONDecodeError, KeyError, IndexError):
+                            continue
+                return
+    except Exception as e:
+        logger.debug(f"LM Studio stream skipped: {e}")
 
 
 async def generate(query: str, passages: list[str]) -> str:
