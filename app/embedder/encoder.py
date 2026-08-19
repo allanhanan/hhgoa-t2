@@ -32,7 +32,7 @@ def _load_onnx_or_fallback():
         from transformers import AutoTokenizer
 
         sess_opts = ort.SessionOptions()
-        sess_opts.intra_op_num_threads = 4
+        sess_opts.intra_op_num_threads = 2
         sess_opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
         sess_opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
 
@@ -48,9 +48,9 @@ def _load_onnx_or_fallback():
 
 def encode(text: str) -> NDArray[np.float32]:
     """Encode a single query string → float32 embedding [384]."""
-    kind, sess_or_model, tok = _load_onnx_or_fallback()
+    from app.config import MAX_TOKEN_LIMIT
     if kind == "onnx":
-        inputs = tok(text, return_tensors="np", truncation=True, max_length=128)
+        inputs = tok(text, return_tensors="np", truncation=True, max_length=MAX_TOKEN_LIMIT)
         feed = {
             "input_ids": inputs["input_ids"],
             "attention_mask": inputs["attention_mask"],

@@ -56,7 +56,7 @@ async def generate_stream(
     context = "\n\n".join(f"[{i+1}] {p}" for i, p in enumerate(passages))
     client = _get_client()
 
-    # 1. Try llama.cpp server (http://127.0.0.1:8080/completion)
+    # 1. Try llama.cpp server (http://127.0.0.1:8081/completion)
     prompt = _build_prompt(query, passages)
     payload = {
         "prompt": prompt,
@@ -135,23 +135,24 @@ async def generate(query: str, passages: list[str]) -> str:
 
 
 async def health_check() -> bool:
-    """Check if LM Studio or llama.cpp server is reachable."""
-    # Check LM Studio
+    """Check if llama.cpp or LM Studio server is reachable."""
+    # Check llama.cpp first
     try:
-        async with httpx.AsyncClient(timeout=1.0) as client:
-            resp = await client.get(f"{LMSTUDIO_URL.rstrip('/')}/models")
-            if resp.status_code == 200:
-                return True
-    except Exception:
-        pass
-
-    # Check llama.cpp
-    try:
-        async with httpx.AsyncClient(timeout=1.0) as client:
+        async with httpx.AsyncClient(timeout=0.5) as client:
             resp = await client.get(f"{LLAMA_CPP_URL.rstrip('/')}/health")
             if resp.status_code == 200:
                 return True
     except Exception:
         pass
 
+    # Check LM Studio fallback
+    try:
+        async with httpx.AsyncClient(timeout=0.5) as client:
+            resp = await client.get(f"{LMSTUDIO_URL.rstrip('/')}/models")
+            if resp.status_code == 200:
+                return True
+    except Exception:
+        pass
+
     return False
+

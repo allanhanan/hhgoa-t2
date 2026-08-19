@@ -41,6 +41,15 @@ async def lifespan(app: FastAPI):
     logger.info("Warming up embedding model...")
     warmup_encoder()
 
+    # Warm up extractive QA model
+    logger.info("Warming up extractive QA model...")
+    from app.answerer.extractive_qa import warmup as warmup_qa
+    qa_ready = warmup_qa()
+    if qa_ready:
+        logger.info("  QA model loaded and warmed up")
+    else:
+        logger.warning("  QA model ONNX file not found; will use passage fallback")
+
     # Compute corpus centroid for relevance guardrail
     logger.info("Computing corpus centroid for relevance guardrail...")
     centroid_path = str(DATA_DIR / "corpus_centroid.npy")
@@ -58,7 +67,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="HH Goa 2026 — Voice-Enabled RAG Pipeline",
-    description="Voice → STT → Retrieval (FAISS binary) → LLM → Answer",
+    description="Voice → STT → Retrieval (FAISS binary) → Extractive QA → Answer",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -217,11 +226,11 @@ async def voice_stream_endpoint(ws: WebSocket):
 @app.get("/health", response_model=HealthResponse)
 async def health_endpoint():
     """Health check — reports component readiness."""
-    from app.generator.local_llm import health_check as llm_health
+    from app.answerer.extractive_qa import QA_ONNX_PATH
 
     return HealthResponse(
         status="ok",
         index_loaded=vector_db.is_loaded(),
         embedding_model_loaded=True,  # Loaded during startup
-        llm_available=await llm_health(),
+        qa_model_loaded=QA_ONNX_PATH.exists(),
     )

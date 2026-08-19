@@ -35,6 +35,7 @@ class PipelineMetrics(BaseModel):
     rescore_ms: float = 0.0
     payload_ms: float = 0.0
     guardrail_context_ms: float = 0.0
+    answer_ms: float = 0.0
     generate_ttft_ms: float = 0.0
     generate_total_ms: float = 0.0
     guardrail_output_ms: float = 0.0
@@ -76,4 +77,5 @@ class HealthResponse(BaseModel):
     status: str = "ok"
     index_loaded: bool = False
     embedding_model_loaded: bool = False
+    qa_model_loaded: bool = False
     llm_available: bool = False

@@ -17,7 +17,7 @@ PAYLOAD_DB = str(DATA_DIR / "payloads.db")
 QUERIES_PATH = str(DATA_DIR / "benchmark_queries.json")
 
 # ── Latency budgets (ms) ──────────────────────────────────────────────
-LATENCY_BUDGET_MS = 10000     # Full pipeline timeout budget (ms)
+LATENCY_BUDGET_MS = 200     # Full pipeline timeout budget (ms)
 RETRIEVAL_BUDGET_MS = 6       # Embed + search + rescore + payload
 
 # ── Retrieval tuning ──────────────────────────────────────────────────
@@ -27,19 +27,13 @@ EMBEDDING_DIM = 384           # all-MiniLM-L6-v2 dimension
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 INDEX_SIZE = 500_000          # Number of passages to index
 
-# ── LLM ───────────────────────────────────────────────────────────────
-LMSTUDIO_URL = os.getenv("LMSTUDIO_URL", "http://127.0.0.1:2000/v1")
-LLAMA_CPP_URL = os.getenv("LLAMA_CPP_URL", "http://127.0.0.1:8080")
-LOCAL_LLM_MODEL = os.getenv("LOCAL_LLM_MODEL", "SupraLabs/Supra2-100M-Instruct")
-LLM_MAX_TOKENS = 60
-LLM_TEMPERATURE = 0.0
-LLM_REPEAT_PENALTY = 1.1
-
-SYSTEM_PROMPT = (
-    "Answer in one sentence using ONLY the provided context. "
-    "If the answer is not in the context, say: "
-    "'I cannot answer from the provided information.'"
-)
+# ── Extractive QA ─────────────────────────────────────────────────────
+QA_ONNX_MODEL = str(MODELS_DIR / "onnx" / "minilm_qa.onnx")
+QA_TOKENIZER_NAME = "deepset/minilm-uncased-squad2"
+QA_CONFIDENCE_THRESHOLD = 0.01     # Minimum confidence to accept extracted span
+HEURISTIC_CONFIDENCE = 0.7         # Tier 1 heuristic confidence threshold
+MAX_TOKEN_LIMIT = 256              # Max token limit for encoder/QA sequence limits
+QA_MAX_SPAN_TOKENS = 256           # Max extracted answer span length in tokens
 
 # ── STT ───────────────────────────────────────────────────────────────
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
@@ -48,10 +42,6 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
 SAFETY_MAX_QUERY_LEN = 500
 RELEVANCE_THRESHOLD = 0.35    # Max top passage similarity threshold (0.35)
 GROUNDING_OVERLAP_THRESHOLD = 0.3
-
-# ── Groq fallback ─────────────────────────────────────────────────────
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL = "llama-3.3-70b-versatile"
 
 # ── Dataset ───────────────────────────────────────────────────────────
 DATASET_NAME = "ai4bharat/MSMARCO-XI"
