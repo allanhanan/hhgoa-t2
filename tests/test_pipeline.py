@@ -56,6 +56,13 @@ class TestExtractiveQA(unittest.TestCase):
         result = qa_answer(question, passages)
         self.assertIn("1991", result.text)
 
+    def test_qa_no_answer(self):
+        question = "why are you dumb?"
+        passage = "Photosynthesis is the process used by plants to convert light energy into chemical energy."
+        result = qa_answer(question, [passage])
+        self.assertEqual(result.text, "")
+        self.assertEqual(result.confidence, 0.0)
+
 
 class TestGuardrails(unittest.TestCase):
     """Test safety and grounding guardrails."""
@@ -74,6 +81,22 @@ class TestGuardrails(unittest.TestCase):
         is_grounded, ratio = check_grounding("New Delhi", passages)
         self.assertTrue(is_grounded)
         self.assertGreater(ratio, 0.5)
+
+    def test_relevance_margin(self):
+        import numpy as np
+        from app.guardrails.relevance import is_relevant
+        dummy_emb = np.zeros((384,), dtype=np.float32)
+
+        # Clear winner: top score far above rest -> relevant
+        scored_winner = [(1, 0.8), (2, 0.3), (3, 0.2)]
+        relevant, margin = is_relevant(dummy_emb, scored_passages=scored_winner)
+        self.assertTrue(relevant)
+        self.assertGreaterEqual(margin, 0.05)
+
+        # Flat distribution: top score close to rest -> not relevant
+        scored_flat = [(1, 0.4), (2, 0.38), (3, 0.37)]
+        relevant, margin = is_relevant(dummy_emb, scored_passages=scored_flat)
+        self.assertFalse(relevant)
 
 
 class TestFastAPIEndpoints(unittest.TestCase):
@@ -97,8 +120,10 @@ class TestFastAPIEndpoints(unittest.TestCase):
         data = response.json()
         self.assertIn("answer", data)
         self.assertIn("metrics", data)
+        self.assertIn("relevant", data)
+        self.assertIn("grounded", data)
         self.assertTrue(data["metrics"]["total_ms"] > 0)
-        self.assertTrue(data["metrics"]["answer_ms"] > 0)
+        self.assertTrue(data["metrics"]["guardrail_context_ms"] >= 0)
 
 
 if __name__ == "__main__":

@@ -32,11 +32,12 @@ async def lifespan(app: FastAPI):
     logger.info(f"  Index loaded: {vector_db.index_size()} vectors")
 
     logger.info("Loading float16 rescore vectors...")
-    vecs = load_rescore_vectors()
+    vecs = load_rescore_vectors(warm=True)
     logger.info(f"  Rescore vectors: {vecs.shape}")
 
     logger.info("Loading SQLite payload store...")
     payload_store.connect()
+    payload_store.warm()
 
     logger.info("Warming up embedding model...")
     warmup_encoder()
@@ -121,7 +122,10 @@ async def query_endpoint(request: QueryRequest):
         answer=result.answer,
         passages=result.passages,
         metrics=result.metrics,
+        relevant=result.relevant,
+        relevance_score=result.relevance_score,
         grounded=result.grounded,
+        answer_tier=result.answer_tier,
         error=result.error,
     )
 

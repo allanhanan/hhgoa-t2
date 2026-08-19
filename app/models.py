@@ -30,6 +30,7 @@ class RetrievalResult(BaseModel):
 class PipelineMetrics(BaseModel):
     """Per-stage latency metrics collected through the pipeline."""
     guardrail_input_ms: float = 0.0
+    translate_ms: float = 0.0
     embed_ms: float = 0.0
     search_ms: float = 0.0
     rescore_ms: float = 0.0
@@ -51,7 +52,10 @@ class PipelineResult(BaseModel):
     answer: str = ""
     passages: list[PassageResult] = Field(default_factory=list)
     metrics: PipelineMetrics = Field(default_factory=PipelineMetrics)
+    relevant: bool = True
+    relevance_score: float = 1.0
     grounded: bool = True
+    answer_tier: str = "verbatim_fallback"
     error: str | None = None
 
 
@@ -68,7 +72,10 @@ class QueryResponse(BaseModel):
     answer: str
     passages: list[PassageResult]
     metrics: PipelineMetrics
+    relevant: bool = True
+    relevance_score: float = 1.0
     grounded: bool = True
+    answer_tier: str = "verbatim_fallback"
     error: str | None = None
 
 

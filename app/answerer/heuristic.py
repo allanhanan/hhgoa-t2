@@ -39,6 +39,9 @@ _Q_PATTERNS = {
         r"^(what is|what are|what was|what were|define|meaning of)\b",
         re.IGNORECASE,
     ),
+    "REASON": re.compile(
+        r"^(why)\b", re.IGNORECASE
+    ),
 }
 
 # ── Entity extraction patterns ────────────────────────────────────────
@@ -99,6 +102,9 @@ def heuristic_extract(question: str, passage: str) -> HeuristicResult:
     q_type = classify_question(question)
     if q_type is None:
         return HeuristicResult(answer=None, confidence=0.0, method="no_match")
+
+    if q_type == "REASON":
+        return HeuristicResult(answer=None, confidence=0.0, method="reason_no_extraction")
 
     if q_type == "DEFINITION":
         q_clean = re.sub(r"^(what is|what are|what was|what were|define|meaning of)\s+", "", question, flags=re.IGNORECASE)

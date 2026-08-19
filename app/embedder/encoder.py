@@ -48,6 +48,7 @@ def _load_onnx_or_fallback():
 
 def encode(text: str) -> NDArray[np.float32]:
     """Encode a single query string → float32 embedding [384]."""
+    kind, sess_or_model, tok = _load_onnx_or_fallback()
     from app.config import MAX_TOKEN_LIMIT
     if kind == "onnx":
         inputs = tok(text, return_tensors="np", truncation=True, max_length=MAX_TOKEN_LIMIT)

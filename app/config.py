@@ -30,7 +30,9 @@ INDEX_SIZE = 500_000          # Number of passages to index
 # ── Extractive QA ─────────────────────────────────────────────────────
 QA_ONNX_MODEL = str(MODELS_DIR / "onnx" / "minilm_qa.onnx")
 QA_TOKENIZER_NAME = "deepset/minilm-uncased-squad2"
-QA_CONFIDENCE_THRESHOLD = 0.01     # Minimum confidence to accept extracted span
+QA_CONFIDENCE_THRESHOLD = 0.15     # Minimum confidence to accept extracted span
+QA_NULL_THRESHOLD: float = 0.0     # TUNE: sweep against a labeled dev set
+QA_MARGIN_THRESHOLD: float = 0.05  # TUNE: sweep against a labeled dev set
 HEURISTIC_CONFIDENCE = 0.7         # Tier 1 heuristic confidence threshold
 MAX_TOKEN_LIMIT = 256              # Max token limit for encoder/QA sequence limits
 QA_MAX_SPAN_TOKENS = 256           # Max extracted answer span length in tokens
@@ -41,6 +43,8 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
 # ── Guardrails ────────────────────────────────────────────────────────
 SAFETY_MAX_QUERY_LEN = 500
 RELEVANCE_THRESHOLD = 0.35    # Max top passage similarity threshold (0.35)
+RELEVANCE_MARGIN_THRESHOLD: float = 0.05   # TUNE: sweep against labeled queries
+RELEVANCE_MIN_ABS_SCORE: float = 0.35      # TUNE: reject near-zero floor regardless of margin
 GROUNDING_OVERLAP_THRESHOLD = 0.3
 
 # ── Dataset ───────────────────────────────────────────────────────────

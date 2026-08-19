@@ -10,7 +10,7 @@ from app.config import FLOAT16_PATH
 _float16_vectors: np.ndarray | None = None
 
 
-def load_vectors(path: str | None = None) -> np.ndarray:
+def load_vectors(path: str | None = None, warm: bool = True) -> np.ndarray:
     """Load float16 vectors memory-mapped into RAM."""
     global _float16_vectors
     path = path or FLOAT16_PATH
@@ -22,6 +22,13 @@ def load_vectors(path: str | None = None) -> np.ndarray:
             n_bytes = Path(path).stat().st_size
             n_rows = n_bytes // (384 * 2)  # float16 is 2 bytes
             _float16_vectors = np.memmap(path, dtype=np.float16, mode="r", shape=(n_rows, 384))
+
+        if warm:
+            try:
+                # Force array memory pages into OS cache using float64 accumulator
+                _ = np.sum(_float16_vectors, dtype=np.float64)
+            except Exception:
+                pass
     return _float16_vectors
 
 

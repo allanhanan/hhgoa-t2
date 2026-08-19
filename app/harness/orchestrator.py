@@ -45,9 +45,14 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
             metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
             return PipelineResult(error=reason, metrics=metrics)
 
+    # ── Stage 1.5: Query Language & Translation Routing ───────────────
+    from app.preprocessing.query_language import translate_query_to_english
+    with _timer(metrics, "translate_ms"):
+        search_query, was_translated, orig_script = translate_query_to_english(query_text)
+
     # ── Stage 2: Embed ────────────────────────────────────────────────
     with _timer(metrics, "embed_ms"):
-        float_emb, binary_emb = encode_and_binarize(query_text)
+        float_emb, binary_emb = encode_and_binarize(search_query)
 
     # ── Stage 3: Binary search ────────────────────────────────────────
     from app.config import TOP_K_BINARY
@@ -68,8 +73,7 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
 
     # ── Stage 6: Context guardrail ────────────────────────────────────
     with _timer(metrics, "guardrail_context_ms"):
-        top_score = passages[0].score if passages else None
-        relevant, sim_score = is_relevant(float_emb, max_passage_score=top_score)
+        relevant, sim_score = is_relevant(float_emb, scored_passages=scored)
         if not relevant:
             metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
             return PipelineResult(
@@ -77,11 +81,16 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
                        "Please ask a question about the topics covered in the dataset.",
                 passages=passages,
                 metrics=metrics,
+                relevant=False,
+                relevance_score=sim_score,
+                grounded=True,
+                answer_tier="none",
             )
 
     # ── Stage 7: Answer extraction (3-tier cascade) ───────────────────
     passage_texts = [p.text for p in passages]
     answer = ""
+    answer_tier = "verbatim_fallback"
 
     with _timer(metrics, "answer_ms"):
         # Tier 1: Heuristic fast path
@@ -90,6 +99,7 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
 
         if heuristic_result.answer and heuristic_result.confidence >= 0.7:
             answer = heuristic_result.answer
+            answer_tier = "heuristic"
         else:
             # Tier 2: Extractive QA model (ONNX)
             try:
@@ -97,11 +107,13 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
                 qa_result = qa_answer(query_text, passage_texts)
                 if qa_result.text and qa_result.confidence > 0.0:
                     answer = qa_result.text
+                    answer_tier = "qa_model"
             except Exception:
                 pass
 
         # Tier 3: Passage verbatim fallback
         if not answer:
+            answer_tier = "verbatim_fallback"
             if passages:
                 answer = passages[0].text
             else:
@@ -112,7 +124,10 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
 
     # ── Stage 8: Output guardrail ─────────────────────────────────────
     with _timer(metrics, "guardrail_output_ms"):
-        grounded, overlap = check_grounding(answer, passage_texts)
+        if answer_tier == "qa_model":
+            grounded, overlap = check_grounding(answer, passage_texts)
+        else:
+            grounded = True
 
     metrics.total_ms = (time.perf_counter() - pipeline_start) * 1000
 
@@ -120,5 +135,8 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
         answer=answer,
         passages=passages,
         metrics=metrics,
+        relevant=relevant,
+        relevance_score=sim_score,
         grounded=grounded,
+        answer_tier=answer_tier,
     )

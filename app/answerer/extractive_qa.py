@@ -81,12 +81,26 @@ def _extract_span(
     end_logits = end_logits[0]
 
     token_type_ids = inputs["token_type_ids"][0]
-    mask = token_type_ids == 1
-    start_logits[~mask] = -1e8
-    end_logits[~mask] = -1e8
+    context_mask = token_type_ids == 1
 
-    start_idx = int(np.argmax(start_logits))
-    end_idx = int(np.argmax(end_logits))
+    # Only suppress question/SEP tokens — CLS (index 0) stays eligible,
+    # since it's the model's "no answer" signal.
+    suppress_mask = ~context_mask
+    suppress_mask[0] = False
+
+    start_logits = start_logits.copy()
+    end_logits = end_logits.copy()
+    start_logits[suppress_mask] = -1e8
+    end_logits[suppress_mask] = -1e8
+
+    # Null (no-answer) score
+    null_score = float(start_logits[0] + end_logits[0])
+
+    # Best non-null span, searched only within context tokens
+    ctx_start = np.where(context_mask, start_logits, -1e8)
+    ctx_end = np.where(context_mask, end_logits, -1e8)
+    start_idx = int(np.argmax(ctx_start))
+    end_idx = int(np.argmax(ctx_end))
 
     if end_idx < start_idx:
         end_idx = start_idx
@@ -95,9 +109,17 @@ def _extract_span(
     if end_idx - start_idx > QA_MAX_SPAN_TOKENS:
         end_idx = start_idx + QA_MAX_SPAN_TOKENS
 
-    start_probs = _softmax(start_logits[mask])
-    end_probs = _softmax(end_logits[mask])
-    mask_indices = np.where(mask)[0]
+    best_non_null_score = float(ctx_start[start_idx] + ctx_end[end_idx])
+
+    # SQuAD2 convention: predict null if it beats the best span by
+    # more than NULL_THRESHOLD.
+    from app.config import QA_NULL_THRESHOLD
+    if null_score > best_non_null_score - QA_NULL_THRESHOLD:
+        return "", 0.0  # explicit "no answer" signal
+
+    start_probs = _softmax(ctx_start[context_mask])
+    end_probs = _softmax(ctx_end[context_mask])
+    mask_indices = np.where(context_mask)[0]
     start_local = np.searchsorted(mask_indices, start_idx)
     end_local = np.searchsorted(mask_indices, end_idx)
     start_local = min(start_local, len(start_probs) - 1)
@@ -127,12 +149,13 @@ def _softmax(x: np.ndarray) -> np.ndarray:
 def answer(
     question: str,
     passages: list[str],
-    confidence_threshold: float = 0.01,
+    confidence_threshold: float | None = None,
 ) -> AnswerResult:
     """Run extractive QA with early-exit over ranked passages.
 
     Tries each passage in order (most relevant first). Returns the first
-    answer with confidence above the threshold, or the best answer found.
+    answer with confidence above the threshold and sufficient margin,
+    or an empty result.
 
     Args:
         question: The user's question.
@@ -142,10 +165,15 @@ def answer(
     Returns:
         AnswerResult with the extracted span and confidence score.
     """
+    from app.config import QA_CONFIDENCE_THRESHOLD, QA_MARGIN_THRESHOLD
+    if confidence_threshold is None:
+        confidence_threshold = QA_CONFIDENCE_THRESHOLD
+
     session, tokenizer = _load_qa()
 
     best_answer = ""
     best_confidence = 0.0
+    second_best_confidence = 0.0
     best_idx = 0
 
     for i, passage in enumerate(passages[:2]):
@@ -153,20 +181,17 @@ def answer(
             continue
 
         text, conf = _extract_span(session, tokenizer, question, passage)
+        if not text:
+            continue  # explicit no-answer signal from Fix 1, skip
 
         if conf > best_confidence:
-            best_answer = text
-            best_confidence = conf
-            best_idx = i
+            second_best_confidence = best_confidence
+            best_answer, best_confidence, best_idx = text, conf, i
+        elif conf > second_best_confidence:
+            second_best_confidence = conf
 
-        if conf >= confidence_threshold and text:
-            return AnswerResult(
-                text=text,
-                confidence=conf,
-                source_passage_idx=i,
-            )
-
-    if best_answer:
+    margin_ok = (best_confidence - second_best_confidence) >= QA_MARGIN_THRESHOLD
+    if best_answer and best_confidence >= confidence_threshold and margin_ok:
         return AnswerResult(
             text=best_answer,
             confidence=best_confidence,
@@ -174,7 +199,7 @@ def answer(
         )
 
     return AnswerResult(
-        text="I cannot determine the answer from the provided context.",
+        text="",
         confidence=0.0,
     )
 

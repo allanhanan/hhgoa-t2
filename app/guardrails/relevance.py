@@ -21,14 +21,33 @@ def compute_centroid_from_vectors(vectors: NDArray) -> NDArray[np.float32]:
     return centroid / (np.linalg.norm(centroid) + 1e-8)
 
 
-def is_relevant(query_embedding: NDArray[np.float32], max_passage_score: float | None = None) -> tuple[bool, float]:
+def is_relevant(
+    query_embedding: NDArray[np.float32],
+    scored_passages: list[tuple[int, float]] | None = None,
+    max_passage_score: float | None = None,
+) -> tuple[bool, float]:
     """Check if a query is relevant to the indexed corpus.
 
-    Evaluates max top passage similarity score or corpus centroid similarity.
+    Prefer margin-based scoring when the full candidate list is available.
 
     Returns:
-        (is_relevant, similarity_score)
+        (is_relevant, score_or_margin)
     """
+    from app.config import (
+        RELEVANCE_MARGIN_THRESHOLD,
+        RELEVANCE_MIN_ABS_SCORE,
+        RELEVANCE_THRESHOLD,
+    )
+
+    if scored_passages and len(scored_passages) >= 2:
+        scores = sorted((s for _, s in scored_passages), reverse=True)
+        top = scores[0]
+        rest_mean = sum(scores[1:]) / len(scores[1:])
+        margin = top - rest_mean
+        passes = margin >= RELEVANCE_MARGIN_THRESHOLD and top >= RELEVANCE_MIN_ABS_SCORE
+        return passes, float(margin)
+
+    # Fallback: existing absolute-threshold / centroid logic, unchanged
     if max_passage_score is not None:
         return max_passage_score >= RELEVANCE_THRESHOLD, max_passage_score
 

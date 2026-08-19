@@ -68,3 +68,18 @@ def fetch(ids: list[int]) -> list[PassageResult]:
 def is_loaded() -> bool:
     """Check if the database connection is open."""
     return _conn is not None
+
+
+def warm(batch_size: int = 50_000) -> None:
+    """Pre-warm SQLite page cache by querying IDs in batches."""
+    try:
+        conn = get_conn()
+        cur = conn.execute("SELECT COUNT(*) FROM payloads")
+        row = cur.fetchone()
+        if not row:
+            return
+        total = row[0]
+        for offset in range(0, total, batch_size):
+            conn.execute("SELECT id FROM payloads LIMIT ? OFFSET ?", (batch_size, offset)).fetchall()
+    except Exception:
+        pass
