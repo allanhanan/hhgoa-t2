@@ -921,17 +921,95 @@
     }
 
     let isRecording = false;
-    function toggleVoiceRecording() {
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recognition = null;
+
+    async function toggleVoiceRecording() {
       const btn = document.getElementById('mic-btn');
-      isRecording = !isRecording;
-      if (isRecording) {
+      const inputEl = document.getElementById('user-query');
+
+      if (!isRecording) {
+        // START RECORDING
+        isRecording = true;
         btn.classList.add('recording');
         btn.innerHTML = '<i class="fa-solid fa-stop"></i>';
-        document.getElementById('user-query').value = "Listening to voice input...";
+        inputEl.value = "";
+        inputEl.placeholder = "Listening... Speak your question now.";
+
+        audioChunks = [];
+
+        // 1. Browser SpeechRecognition for real-time live text preview
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+          try {
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.onresult = (event) => {
+              let transcript = '';
+              for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+              }
+              if (transcript.trim()) {
+                inputEl.value = transcript;
+              }
+            };
+            recognition.start();
+          } catch(e) {
+            console.log("SpeechRecognition init error:", e);
+          }
+        }
+
+        // 2. Record audio with MediaRecorder for ElevenLabs STT API endpoint
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = (event) => {
+              if (event.data.size > 0) audioChunks.push(event.data);
+            };
+            mediaRecorder.onstop = async () => {
+              stream.getTracks().forEach(track => track.stop());
+              const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+              if (audioBlob.size > 0) {
+                const formData = new FormData();
+                formData.append('file', audioBlob, 'speech.webm');
+                try {
+                  const res = await fetch('/api/transcribe', {
+                    method: 'POST',
+                    body: formData
+                  });
+                  if (res.ok) {
+                    const data = await res.json();
+                    if (data.text && data.text.trim()) {
+                      inputEl.value = data.text.trim();
+                    }
+                  }
+                } catch(err) {
+                  console.log("ElevenLabs STT endpoint fetch error:", err);
+                }
+              }
+            };
+            mediaRecorder.start();
+          } catch(err) {
+            console.log("Microphone access error:", err);
+          }
+        }
       } else {
+        // STOP RECORDING
+        isRecording = false;
         btn.classList.remove('recording');
         btn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
-        document.getElementById('user-query').value = "What is retrieval augmented generation?";
+        inputEl.placeholder = "Ask a question or record voice...";
+
+        if (recognition) {
+          try { recognition.stop(); } catch(e){}
+        }
+
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop();
+        }
       }
     }
 

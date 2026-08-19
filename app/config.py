@@ -42,9 +42,9 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
 
 # ── Guardrails ────────────────────────────────────────────────────────
 SAFETY_MAX_QUERY_LEN = 500
-RELEVANCE_THRESHOLD = 0.35    # Max top passage similarity threshold (0.35)
+RELEVANCE_THRESHOLD = 0.33    # Max top passage similarity threshold (0.35)
 RELEVANCE_MARGIN_THRESHOLD: float = 0.05   # TUNE: sweep against labeled queries
-RELEVANCE_MIN_ABS_SCORE: float = 0.35      # TUNE: reject near-zero floor regardless of margin
+RELEVANCE_MIN_ABS_SCORE: float = 0.30      # TUNE: reject near-zero floor regardless of margin
 GROUNDING_OVERLAP_THRESHOLD = 0.3
 
 # ── Dataset ───────────────────────────────────────────────────────────

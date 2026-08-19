@@ -112,6 +112,18 @@ async def get_benchmark_api():
     }
 
 
+from fastapi import UploadFile, File
+
+@app.post("/api/transcribe")
+async def transcribe_speech(file: UploadFile = File(...)):
+    """Speech-to-text API: Transcribes audio file using ElevenLabs STT."""
+    from app.stt.elevenlabs import transcribe_audio_rest
+    content = await file.read()
+    c_type = file.content_type or "audio/webm"
+    res = await transcribe_audio_rest(content, content_type=c_type)
+    return res
+
+
 @app.post("/query", response_model=QueryResponse)
 async def query_endpoint(request: QueryRequest):
     """Text query → RAG pipeline → JSON response with metrics."""
