@@ -1,12 +1,14 @@
 services:
   rag-pipeline:
+    container_name: rag-pipeline
     build: .
     ports:
       - "8000:8000"
-      - "8081:8081"
     volumes:
       - ./data:/app/data
-    env_file: .env
+    environment:
+      - DATA_DIR=/app/data
+      - MODELS_DIR=/app/models
     deploy:
       resources:
         limits:

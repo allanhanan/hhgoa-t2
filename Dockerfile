@@ -1,30 +1,30 @@
 FROM python:3.11-slim AS base
 WORKDIR /app
 
-# Install system deps
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential curl sqlite3 && rm -rf /var/lib/apt/lists/*
+# Prevent Python from writing .pyc files and enable unbuffered logging
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    DATA_DIR=/app/data \
+    MODELS_DIR=/app/models
 
-# Install Python deps
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential curl sqlite3 && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Download embedding model (ONNX)
-RUN python -c "from sentence_transformers import SentenceTransformer; \
-    SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
+# Pre-cache tokenizers to ensure fast container startup
+RUN python -c "from transformers import AutoTokenizer; AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2'); AutoTokenizer.from_pretrained('deepset/minilm-uncased-squad2')"
 
-# Download llama.cpp binary (pre-built with AVX2)
-RUN curl -L https://github.com/ggerganov/llama.cpp/releases/latest/download/llama-server-linux-x64 \
-    -o /usr/local/bin/llama-server && chmod +x /usr/local/bin/llama-server
+# Ensure mount point and application directories exist
+RUN mkdir -p /app/data /app/models
 
-# Download SmolLM2-135M-Instruct GGUF (Q4_K_M, ~85MB)
-RUN mkdir -p /app/models && \
-    curl -L "https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct-GGUF/resolve/main/smollm2-135m-instruct-q4_k_m.gguf" \
-    -o /app/models/smollm2-135m-instruct-q4_k_m.gguf
+# Copy source code and entrypoint
+COPY . /app
+RUN chmod +x /app/entrypoint.sh
 
-COPY . .
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-EXPOSE 8000 8081
-CMD ["/entrypoint.sh"]
+EXPOSE 8000
+CMD ["/app/entrypoint.sh"]
