@@ -80,3 +80,33 @@ async def stream_transcribe(
             "confidence": 0.0,
             "error": f"WebSocket error: {e}",
         }
+
+
+async def transcribe_audio_rest(audio_bytes: bytes, content_type: str = "audio/webm") -> dict[str, str]:
+    """Transcribe audio file bytes using ElevenLabs Speech-to-Text REST API.
+
+    Returns:
+        Dict with key 'text' (str) or 'error' (str).
+    """
+    if not ELEVENLABS_API_KEY:
+        return {"text": "", "error": "ELEVENLABS_API_KEY is not set in .env"}
+
+    import httpx
+
+    url = "https://api.elevenlabs.io/v1/speech-to-text"
+    headers = {"xi-api-key": ELEVENLABS_API_KEY}
+
+    files = {
+        "file": ("audio.webm", audio_bytes, content_type),
+        "model_id": (None, "scribe_v1"),
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            resp = await client.post(url, headers=headers, files=files)
+            if resp.status_code == 200:
+                res_data = resp.json()
+                return {"text": res_data.get("text", "")}
+            return {"text": "", "error": f"ElevenLabs STT API Error: {resp.status_code} - {resp.text}"}
+    except Exception as e:
+        return {"text": "", "error": f"STT request failed: {e}"}

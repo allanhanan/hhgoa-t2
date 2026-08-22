@@ -10,8 +10,8 @@ from app.config import FLOAT16_PATH
 _float16_vectors: np.ndarray | None = None
 
 
-def load_vectors(path: str | None = None) -> np.ndarray:
-    """Load float16 vectors memory-mapped into RAM."""
+def load_vectors(path: str | None = None, warm: bool = False) -> np.ndarray:
+    """Load float16 vectors memory-mapped into RAM (lazy loading)."""
     global _float16_vectors
     path = path or FLOAT16_PATH
     if _float16_vectors is None:
@@ -22,6 +22,9 @@ def load_vectors(path: str | None = None) -> np.ndarray:
             n_bytes = Path(path).stat().st_size
             n_rows = n_bytes // (384 * 2)  # float16 is 2 bytes
             _float16_vectors = np.memmap(path, dtype=np.float16, mode="r", shape=(n_rows, 384))
+
+        # Full-dataset warming is disabled to ensure lazy memory-mapped behavior.
+        # Candidate vectors are retrieved on-demand during rescoring.
     return _float16_vectors
 
 
@@ -56,9 +59,10 @@ def rescore(
     if len(valid_ids) == 0:
         return []
 
-    # Limit to top 8 candidates to avoid random 5GB disk page faults
-    if len(valid_ids) > 8:
-        valid_ids = valid_ids[:8]
+    from app.config import TOP_K_BINARY, ANN_TOP_K
+    max_cands = max(TOP_K_BINARY, ANN_TOP_K)
+    if len(valid_ids) > max_cands:
+        valid_ids = valid_ids[:max_cands]
 
     # Fetch float16 vectors for candidates
     try:

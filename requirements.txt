@@ -1,29 +1,29 @@
-# Core
+# Core Framework & Server
 fastapi>=0.115.0
 uvicorn[standard]>=0.30.0
 pydantic>=2.0
 python-dotenv>=1.0.0
+psutil>=5.9.0
 
-# ML / Retrieval
+# ML & ONNX Inference (Torch & sentence-transformers omitted to keep Docker image ultra-lightweight)
 faiss-cpu>=1.7.4
 numpy>=1.26.0
-sentence-transformers>=3.0.0
 onnxruntime>=1.18.0
+transformers>=4.40.0
+huggingface-hub>=0.23.0
 
-# Dataset
-datasets>=2.20.0
+# Data Processing
 pyarrow>=16.0.0
+requests>=2.31.0
 
-# HTTP / Streaming
+# HTTP & Streaming
 httpx>=0.27.0
 sse-starlette>=2.0.0
 websockets>=12.0
 
-# STT
+# Speech-to-Text & LLM Services
 elevenlabs>=1.0.0
-
-# LLM fallback
 groq>=0.9.0
 
-# Benchmark
+# Benchmarking & Utilities
 rich>=13.0.0

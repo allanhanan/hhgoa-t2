@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.*.local
+!.env.example
 
 # Python Bytecode & Caches
 __pycache__/
@@ -18,20 +19,32 @@ venv/
 env/
 ENV/
 
-# Large Datasets & Generated Artifacts (data/)
-data/*.parquet
-data/*.npy
-data/*.faiss_binary
-data/*.db
-data/*.db-wal
-data/*.db-shm
-data/*.json
+# Large Datasets, Indices & Artifacts (data/)
+data/
+data/*
+data/**
 
-# Large Model Files & Compiled Executables (models/)
-models/*.gguf
-models/*.bin
-models/onnx/
-models/llama-server
+# Model Files & ONNX Exports (models/)
+models/
+models/*
+models/**
+
+# Ignore Large Files (> 100MB extensions & model formats)
+*.gguf
+*.onnx
+*.onnx.data
+*.bin
+*.npy
+*.db
+*.parquet
+*.safetensors
+*.pth
+*.pt
+*.h5
+*.ckpt
+*.tflite
+*.tar.gz
+*.zip
 
 # Logs & Temporary Files
 *.log
@@ -44,3 +57,6 @@ scratch/
 .DS_Store
 *.swp
 *.swo
+
+# Generated Files
+all_coding.md

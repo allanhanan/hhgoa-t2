@@ -1,7 +1,7 @@
 """Download and sample MSMARCO-XI dataset for index building.
 
 Usage:
-    python -m ingestion.download_dataset [--n-passages 500000] [--output-dir data/]
+    python -m ingestion.download_dataset [--n-passages 10000] [--output-dir data/]
 """
 from __future__ import annotations
 
@@ -17,7 +17,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 logger = logging.getLogger(__name__)
 
 
+import os
+os.environ["HF_HUB_DISABLE_XET"] = "1"
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "0"
+
 TRAIN_FILES = [
+    "validation/hinval.parquet",
     "train/hintrain.parquet",
 ]
 
@@ -69,18 +74,62 @@ def download_and_extract(
             if total_passages >= n_passages:
                 break
 
-            logger.info(f"Downloading/loading MSMARCO-XI file ({lfile}) via HF Hub...")
-            try:
-                local_file_path = hf_hub_download(
-                    repo_id="ai4bharat/MSMARCO-XI",
-                    filename=lfile,
-                    repo_type="dataset",
-                )
-            except Exception as e:
-                logger.warning(f"Failed to download {lfile}: {e}")
-                continue
+            local_file = output_path / Path(lfile).name
+            if local_file.exists() and local_file.stat().st_size > 10 * 1024 * 1024:
+                try:
+                    pf_check = pq.ParquetFile(str(local_file))
+                    logger.info(f"Using existing valid local file at {local_file} ({local_file.stat().st_size / (1024*1024):.1f} MB, {pf_check.metadata.num_rows} rows)")
+                except Exception:
+                    logger.warning(f"Existing local file {local_file} is incomplete/corrupted. Removing and re-downloading...")
+                    try:
+                        local_file.unlink()
+                    except Exception as unlink_err:
+                        logger.warning(f"Could not remove {local_file}: {unlink_err}")
 
-            local_file = Path(local_file_path)
+            if not local_file.exists():
+                logger.info(f"Downloading MSMARCO-XI file ({lfile})...")
+                url = f"https://huggingface.co/datasets/ai4bharat/MSMARCO-XI/resolve/main/{lfile}"
+                download_success = False
+                tmp_file = output_path / f"{Path(lfile).name}.tmp"
+                try:
+                    import requests
+                    headers = {}
+                    dl = 0
+                    if tmp_file.exists():
+                        dl = tmp_file.stat().st_size
+                        headers["Range"] = f"bytes={dl}-"
+                    
+                    with requests.get(url, headers=headers, stream=True, timeout=60) as r:
+                        if r.status_code in (200, 206):
+                            total_sz = int(r.headers.get("content-length", 0)) + (dl if r.status_code == 206 else 0)
+                            mode = "ab" if r.status_code == 206 else "wb"
+                            if r.status_code == 200:
+                                dl = 0
+                            with open(tmp_file, mode) as f:
+                                for chunk in r.iter_content(chunk_size=1024*1024):
+                                    if chunk:
+                                        f.write(chunk)
+                                        dl += len(chunk)
+                                        if total_sz > 0 and (dl % (50*1024*1024) < 1024*1024 or dl == total_sz):
+                                            logger.info(f"  Downloaded {dl/(1024*1024):.1f}/{total_sz/(1024*1024):.1f} MB ({(dl*100/total_sz):.1f}%)")
+                            tmp_file.rename(local_file)
+                            download_success = True
+                except Exception as e:
+                    logger.warning(f"Direct download failed ({e}), trying hf_hub_download...")
+                    try:
+                        local_file_path = hf_hub_download(
+                            repo_id="ai4bharat/MSMARCO-XI",
+                            filename=lfile,
+                            repo_type="dataset",
+                        )
+                        local_file = Path(local_file_path)
+                        download_success = True
+                    except Exception as e2:
+                        logger.warning(f"Failed to download {lfile}: {e2}")
+
+                if not download_success or not local_file.exists():
+                    continue
+
             logger.info(f"Parquet file ready at {local_file} ({local_file.stat().st_size / (1024*1024):.1f} MB)")
 
             pf = pq.ParquetFile(str(local_file))
@@ -190,7 +239,7 @@ def download_and_extract(
 
 def main():
     parser = argparse.ArgumentParser(description="Download and sample MSMARCO-XI")
-    parser.add_argument("--n-passages", type=int, default=500_000)
+    parser.add_argument("--n-passages", type=int, default=10_000)
     parser.add_argument("--output-dir", type=str, default="data")
     args = parser.parse_args()
 

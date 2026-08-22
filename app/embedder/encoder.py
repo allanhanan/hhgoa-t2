@@ -14,7 +14,9 @@ _onnx_session = None
 _tokenizer = None
 _model = None
 
-ONNX_MODEL_PATH = Path(__file__).resolve().parent.parent.parent / "models" / "onnx" / "minilm_fp32.onnx"
+ONNX_INT8_PATH = Path(__file__).resolve().parent.parent.parent / "models" / "onnx" / "minilm_int8.onnx"
+ONNX_FP32_PATH = Path(__file__).resolve().parent.parent.parent / "models" / "onnx" / "minilm_fp32.onnx"
+ONNX_MODEL_PATH = ONNX_INT8_PATH if ONNX_INT8_PATH.exists() else ONNX_FP32_PATH
 
 
 def _load_onnx_or_fallback():
@@ -29,34 +31,40 @@ def _load_onnx_or_fallback():
         import onnxruntime as ort
         from transformers import AutoTokenizer
 
-        sess_opts = ort.SessionOptions()
-        sess_opts.intra_op_num_threads = 4
-        sess_opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
-        sess_opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        from app.config import get_onnx_providers, get_onnx_session_options
 
-        _onnx_session = ort.InferenceSession(str(ONNX_MODEL_PATH), sess_opts, providers=["CPUExecutionProvider"])
-        _tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+        sess_opts = get_onnx_session_options(ONNX_MODEL_PATH)
+        providers = get_onnx_providers(ONNX_MODEL_PATH)
+        _onnx_session = ort.InferenceSession(str(ONNX_MODEL_PATH), sess_opts, providers=providers)
+        _tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2", use_fast=True)
         return ("onnx", _onnx_session, _tokenizer)
 
-    from sentence_transformers import SentenceTransformer
-    from app.config import EMBEDDING_MODEL
-    _model = SentenceTransformer(EMBEDDING_MODEL)
-    return ("pt", _model, None)
+    try:
+        from sentence_transformers import SentenceTransformer
+        from app.config import EMBEDDING_MODEL
+        _model = SentenceTransformer(EMBEDDING_MODEL)
+        return ("pt", _model, None)
+    except ImportError:
+        raise RuntimeError(
+            f"ONNX model not found at {ONNX_MODEL_PATH} and 'sentence-transformers' is not installed. "
+            "Please ensure the ONNX model exists in models/onnx/ or install sentence-transformers."
+        )
 
 
 def encode(text: str) -> NDArray[np.float32]:
     """Encode a single query string → float32 embedding [384]."""
     kind, sess_or_model, tok = _load_onnx_or_fallback()
+    from app.config import MAX_TOKEN_LIMIT
     if kind == "onnx":
-        inputs = tok(text, return_tensors="np", padding=True, truncation=True)
-        inputs_onnx = {
-            "input_ids": inputs["input_ids"].astype(np.int64),
-            "attention_mask": inputs["attention_mask"].astype(np.int64),
-            "token_type_ids": inputs.get("token_type_ids", np.zeros_like(inputs["input_ids"])).astype(np.int64),
+        inputs = tok(text, return_tensors="np", truncation=True, max_length=MAX_TOKEN_LIMIT)
+        feed = {
+            "input_ids": inputs["input_ids"],
+            "attention_mask": inputs["attention_mask"],
+            "token_type_ids": inputs.get("token_type_ids", np.zeros_like(inputs["input_ids"])),
         }
-        out = sess_or_model.run(None, inputs_onnx)[0]
+        out = sess_or_model.run(None, feed)[0]
         # Mean pooling + L2 norm
-        mask = inputs_onnx["attention_mask"][:, :, None]
+        mask = feed["attention_mask"][:, :, None]
         emb = (out * mask).sum(axis=1) / np.maximum(mask.sum(axis=1), 1e-9)
         norm = np.linalg.norm(emb, axis=1, keepdims=True)
         emb = (emb / np.maximum(norm, 1e-9)).astype(np.float32)
@@ -110,5 +118,7 @@ def encode_and_binarize(text: str) -> tuple[NDArray[np.float32], NDArray[np.uint
 
 
 def warmup():
-    """Force model load and run a dummy inference."""
-    encode("warmup query")
+    """Force model load and run multiple dummy inferences to warm ONNX execution graph."""
+    encode("warmup query short")
+    encode("What is retrieval augmented generation and how does vector search work?")
+
