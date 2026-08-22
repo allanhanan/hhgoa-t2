@@ -43,6 +43,19 @@ def generate_answer(query: str, results: list[Any]) -> GeneratedAnswer:
             model="extractive-cascade",
         )
 
+    # Gate: check retrieval score before attempting extraction
+    # If the best retrieved passage has low similarity, the passages are likely irrelevant
+    top_score = max((getattr(r, "score", 0.0) for r in results), default=0.0)
+    if top_score > 0.0:  # only gate when scores are available (eval pipeline provides them)
+        from app.config import GENERATOR_MIN_RETRIEVAL_SCORE
+        if top_score < GENERATOR_MIN_RETRIEVAL_SCORE:
+            return GeneratedAnswer(
+                text="The provided documents do not contain sufficient information to answer this question.",
+                grounded=False,
+                generation_ms=(time.perf_counter() - t0) * 1000,
+                model="extractive-cascade",
+            )
+
     # 1. Tier 1: Heuristic fast-path
     try:
         from app.answerer.heuristic import heuristic_extract
@@ -71,8 +84,8 @@ def generate_answer(query: str, results: list[Any]) -> GeneratedAnswer:
             # Avoid false confidence if extracted span is merely an echo of the query
             if ans_clean != q_clean and not (len(ans_clean) > 8 and ans_clean in q_clean):
                 from app.guardrails.grounding import check_grounding
-
                 is_grounded, _ = check_grounding(qa_res.text, passage_texts)
+
                 if is_grounded:
                     return GeneratedAnswer(
                         text=qa_res.text,

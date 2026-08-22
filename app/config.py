@@ -120,6 +120,7 @@ RELEVANCE_THRESHOLD = 0.33    # Max top passage similarity threshold (0.35)
 RELEVANCE_MARGIN_THRESHOLD: float = 0.00   # TUNE: sweep against labeled queries
 RELEVANCE_MIN_ABS_SCORE: float = 0.42     # TUNE: reject near-zero floor regardless of margin
 GROUNDING_OVERLAP_THRESHOLD = 0.3
+GENERATOR_MIN_RETRIEVAL_SCORE = 0.0   # Disabled: was blocking too many answerable queries
 
 # ── Dataset ───────────────────────────────────────────────────────────
 DATASET_NAME = "ai4bharat/MSMARCO-XI"
