@@ -62,12 +62,14 @@ def _extract_span(
     passage: str,
 ) -> tuple[str, float]:
     """Run a single QA forward pass and return (answer_text, confidence)."""
+    from app.config import MAX_TOKEN_LIMIT
+
     inputs = tokenizer(
         question,
         passage,
         return_tensors="np",
         truncation=True,
-        max_length=128,
+        max_length=MAX_TOKEN_LIMIT,
         return_offsets_mapping=True,
     )
 
@@ -198,9 +200,6 @@ def answer(
 
         if best_confidence >= confidence_threshold:
             break
-
-
-
 
     margin_ok = (best_confidence - second_best_confidence) >= QA_MARGIN_THRESHOLD
     if best_answer and best_confidence >= confidence_threshold and margin_ok:

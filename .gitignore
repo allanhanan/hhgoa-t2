@@ -60,3 +60,9 @@ scratch/
 
 # Generated Files
 all_coding.md
+
+# Eval Loop & Benchmarks
+eval/
+run.ps1
+run.sh
+results/

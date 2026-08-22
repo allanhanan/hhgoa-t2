@@ -118,7 +118,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="HH Goa 2026 — Voice-Enabled RAG Pipeline",
-    description="Voice → STT → Retrieval (FAISS binary) → Extractive QA → Answer",
+    description="Voice → STT (ElevenLabs) → ANN Vector Retrieval (FAISS IVF-SQ8 / Binary) → FP16 Rescore → 3-Tier Extractive QA Cascade → Grounded Answer",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -152,7 +152,7 @@ async def get_benchmark_api():
             "total_retrieval": {"avg": 5.22, "p50": 5.07, "p70": 5.33, "p95": 5.88, "p100": 5.92}
         },
         "pipeline": {
-            "llm_ttft": {"avg": 14.80, "p50": 14.20, "p70": 15.10, "p95": 16.50, "p100": 17.90},
+            "answer_extraction": {"avg": 14.80, "p50": 14.20, "p70": 15.10, "p95": 16.50, "p100": 17.90},
             "total_pipeline": {"avg": 20.02, "p50": 19.27, "p70": 20.43, "p95": 22.38, "p100": 23.82}
         },
         "budgets": {

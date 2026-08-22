@@ -86,5 +86,5 @@ class HealthResponse(BaseModel):
     index_loaded: bool = False
     embedding_model_loaded: bool = False
     qa_model_loaded: bool = False
-    llm_available: bool = False
     hardware_providers: list[str] = []
+

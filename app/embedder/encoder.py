@@ -77,10 +77,11 @@ def encode_batch(texts: list[str], batch_size: int = 256) -> NDArray[np.float32]
     """Encode a batch of texts → float32 embeddings [N, 384]."""
     kind, sess_or_model, tok = _load_onnx_or_fallback()
     if kind == "onnx":
+        from app.config import MAX_TOKEN_LIMIT
         res = []
         for i in range(0, len(texts), batch_size):
             b_texts = texts[i : i + batch_size]
-            inputs = tok(b_texts, return_tensors="np", padding=True, truncation=True)
+            inputs = tok(b_texts, return_tensors="np", padding=True, truncation=True, max_length=MAX_TOKEN_LIMIT)
             inputs_onnx = {
                 "input_ids": inputs["input_ids"].astype(np.int64),
                 "attention_mask": inputs["attention_mask"].astype(np.int64),

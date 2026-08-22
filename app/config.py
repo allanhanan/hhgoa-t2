@@ -107,6 +107,9 @@ QA_MARGIN_THRESHOLD: float = 0.05  # TUNE: sweep against a labeled dev set
 HEURISTIC_CONFIDENCE = 0.3         # Tier 1 heuristic confidence threshold
 MAX_TOKEN_LIMIT = 256              # Max token limit for encoder/QA sequence limits
 QA_MAX_SPAN_TOKENS = 256           # Max extracted answer span length in tokens
+GENERATION_BACKEND = "local"       # Clamps eval pipeline workers to 1 to prevent CPU thread contention
+GENERATION_MODEL = "minilm-qa"
+LOCAL_GENERATION_MODEL = "minilm-qa"
 
 # ── STT ───────────────────────────────────────────────────────────────
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
@@ -115,7 +118,7 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
 SAFETY_MAX_QUERY_LEN = 256
 RELEVANCE_THRESHOLD = 0.33    # Max top passage similarity threshold (0.35)
 RELEVANCE_MARGIN_THRESHOLD: float = 0.00   # TUNE: sweep against labeled queries
-RELEVANCE_MIN_ABS_SCORE: float = 0.45     # TUNE: reject near-zero floor regardless of margin
+RELEVANCE_MIN_ABS_SCORE: float = 0.42     # TUNE: reject near-zero floor regardless of margin
 GROUNDING_OVERLAP_THRESHOLD = 0.3
 
 # ── Dataset ───────────────────────────────────────────────────────────
