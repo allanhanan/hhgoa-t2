@@ -31,12 +31,11 @@ def _load_onnx_or_fallback():
         import onnxruntime as ort
         from transformers import AutoTokenizer
 
-        sess_opts = ort.SessionOptions()
-        sess_opts.intra_op_num_threads = 2
-        sess_opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
-        sess_opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        from app.config import get_onnx_providers, get_onnx_session_options
 
-        _onnx_session = ort.InferenceSession(str(ONNX_MODEL_PATH), sess_opts, providers=["CPUExecutionProvider"])
+        sess_opts = get_onnx_session_options(ONNX_MODEL_PATH)
+        providers = get_onnx_providers(ONNX_MODEL_PATH)
+        _onnx_session = ort.InferenceSession(str(ONNX_MODEL_PATH), sess_opts, providers=providers)
         _tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2", use_fast=True)
         return ("onnx", _onnx_session, _tokenizer)
 

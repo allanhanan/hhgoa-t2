@@ -36,11 +36,24 @@ async def run_pipeline(query_text: str, top_k: int = 5) -> PipelineResult:
 
     Returns a PipelineResult with the answer, passages, and per-stage metrics.
     """
+    pipeline_start = time.perf_counter()
+
     cached = get_cached_result(query_text)
     if cached is not None:
-        return cached
+        cache_metrics = PipelineMetrics(
+            total_ms=round((time.perf_counter() - pipeline_start) * 1000, 2)
+        )
+        return PipelineResult(
+            answer=cached.answer,
+            passages=cached.passages,
+            metrics=cache_metrics,
+            relevant=cached.relevant,
+            relevance_score=cached.relevance_score,
+            grounded=cached.grounded,
+            answer_tier=cached.answer_tier,
+            error=cached.error,
+        )
 
-    pipeline_start = time.perf_counter()
     metrics = PipelineMetrics()
 
     # ── Stage 1: Input guardrail ──────────────────────────────────────

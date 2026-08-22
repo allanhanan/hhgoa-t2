@@ -10,7 +10,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
 from contextlib import asynccontextmanager
 
-from app.config import DATA_DIR, CENTROID_PATH
+from app.config import DATA_DIR, CENTROID_PATH, get_onnx_providers
 from app.models import QueryRequest, QueryResponse, HealthResponse
 from app.retriever import vector_db, payload_store
 from app.retriever.rescorer import load_vectors as load_rescore_vectors, is_loaded as rescore_loaded
@@ -38,7 +38,8 @@ def _get_rss_mb() -> float:
 async def lifespan(app: FastAPI):
     """Startup: load all models and indices into memory with timing and RSS tracking."""
     t_start = time.perf_counter()
-    logger.info(f"Startup initiated | Initial RSS: {_get_rss_mb():.2f} MB")
+    providers = get_onnx_providers()
+    logger.info(f"Startup initiated | Active Hardware Providers: {providers} | Initial RSS: {_get_rss_mb():.2f} MB")
 
     # Checkpoint 1: FAISS load
     t0 = time.perf_counter()
@@ -300,4 +301,5 @@ async def health_endpoint():
         index_loaded=vector_db.is_loaded(),
         embedding_model_loaded=True,  # Loaded during startup
         qa_model_loaded=QA_ONNX_PATH.exists(),
+        hardware_providers=get_onnx_providers(),
     )

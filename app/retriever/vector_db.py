@@ -10,6 +10,27 @@ from app.config import INDEX_PATH, IVF_INDEX_PATH, USE_IVF, IVF_NPROBE, ANN_TOP_
 
 _index: faiss.Index | faiss.IndexBinary | None = None
 _is_ivf: bool = False
+_gpu_res = None  # Keep reference alive to prevent GPU resource deallocation
+
+
+def _try_gpu_index(index):
+    """Move FAISS index to GPU if faiss-gpu is installed and DEVICE != 'cpu'.
+
+    Only beneficial for IVF indices. BinaryFlat uses CPU POPCNT which is
+    already hardware-optimal for Hamming distance.
+    """
+    global _gpu_res
+    from app.config import DEVICE
+    if DEVICE == "cpu":
+        return index
+    try:
+        _gpu_res = faiss.StandardGpuResources()
+        _gpu_res.setTempMemory(64 * 1024 * 1024)  # 64MB GPU temp memory
+        gpu_index = faiss.index_cpu_to_gpu(_gpu_res, 0, index)
+        return gpu_index
+    except (AttributeError, RuntimeError):
+        # faiss-gpu not installed or no GPU available — use CPU index
+        return index
 
 
 def load_index(path: str | None = None, use_ivf: bool | None = None) -> faiss.Index | faiss.IndexBinary:
@@ -26,6 +47,7 @@ def load_index(path: str | None = None, use_ivf: bool | None = None) -> faiss.In
         if Path(ivf_path).exists():
             try:
                 _index = faiss.read_index(ivf_path, faiss.IO_FLAG_READ_ONLY)
+                _index = _try_gpu_index(_index)
                 _is_ivf = True
                 if hasattr(_index, "nprobe"):
                     _index.nprobe = IVF_NPROBE

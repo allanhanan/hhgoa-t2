@@ -43,14 +43,12 @@ def _load_qa():
     import onnxruntime as ort
     from transformers import AutoTokenizer
 
-    sess_opts = ort.SessionOptions()
-    sess_opts.intra_op_num_threads = 2
-    sess_opts.inter_op_num_threads = 1
-    sess_opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
-    sess_opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+    from app.config import get_onnx_providers, get_onnx_session_options
 
+    sess_opts = get_onnx_session_options(QA_ONNX_PATH)
+    providers = get_onnx_providers(QA_ONNX_PATH)
     _qa_session = ort.InferenceSession(
-        str(QA_ONNX_PATH), sess_opts, providers=["CPUExecutionProvider"]
+        str(QA_ONNX_PATH), sess_opts, providers=providers
     )
     _qa_tokenizer = AutoTokenizer.from_pretrained(QA_TOKENIZER_NAME, use_fast=True)
     return _qa_session, _qa_tokenizer
