@@ -942,9 +942,17 @@
                   const res = await fetch('/api/transcribe', { method: 'POST', body: formData });
                   if (res.ok) {
                     const data = await res.json();
-                    if (data.text && data.text.trim()) inputEl.value = data.text.trim();
+                    if (data.text && data.text.trim()) {
+                      inputEl.value = data.text.trim();
+                    } else if (data.error) {
+                      inputEl.placeholder = 'STT Error: ' + data.error;
+                    } else {
+                      inputEl.placeholder = 'No speech detected. Try again.';
+                    }
                   }
-                } catch (err) { /* transcription backend not reachable */ }
+                } catch (err) {
+                  inputEl.placeholder = 'Transcription server unreachable.';
+                }
               }
             };
             mediaRecorder.start();

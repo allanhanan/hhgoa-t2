@@ -303,3 +303,10 @@ async def health_endpoint():
         qa_model_loaded=QA_ONNX_PATH.exists(),
         hardware_providers=get_onnx_providers(),
     )
+
+
+@app.get("/api/status")
+async def status_endpoint():
+    """Simple status check for frontend connection status."""
+    return {"status": "ok"}
+
