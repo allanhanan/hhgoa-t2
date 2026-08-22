@@ -152,6 +152,8 @@ python benchmark.py --mode pipeline --queries 50
 
 ## Hyperparameter Latency Optimization
 
+![Hyperparameter Latency Optimization Curves](threshold_tuning_curves.png)
+
 Using [`tune_thresholds.py`](file:///e:/temp/hhgoa-ts2/hhgoa-t2/tune_thresholds.py), we ran hyperparameter sweeps across retrieval candidate pool sizes and QA thresholds to find the global lowest-latency configuration.
 
 Run sweeps anytime:
